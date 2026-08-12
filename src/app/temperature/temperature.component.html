@@ -1,2 +1,121 @@
-<p class="fecha-actual">La temperatura actual es de {{ temperature }}°C en Buenos Aires</p> 
-  
+<article
+  class="weather-widget"
+  [attr.data-condition]="condition"
+  role="group"
+  [attr.aria-label]="'Clima en Buenos Aires'"
+>
+  <div class="weather-icon" aria-hidden="true">
+    <ng-container *ngTemplateOutlet="weatherIcon; context: { $implicit: condition }"></ng-container>
+  </div>
+
+  <div class="weather-copy">
+    <p class="weather-label">{{ label }}</p>
+    <p class="weather-temp" *ngIf="!isLoading && temperature">{{ temperature }}°</p>
+    <p class="weather-temp loading-dots" *ngIf="isLoading"></p>
+    <p class="weather-place">Buenos Aires</p>
+    <a
+      *ngIf="forecastDays.length"
+      class="weather-forecast-link"
+      href="#"
+      (click)="$event.preventDefault(); $event.stopPropagation(); openForecast()"
+    >Prox. 7 días</a>
+  </div>
+</article>
+
+<div
+  #forecastBackdrop
+  class="forecast-backdrop"
+  *ngIf="forecastOpen"
+  (click)="closeForecast()"
+  role="presentation"
+>
+  <div
+    class="forecast-modal"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="forecast-title"
+  >
+    <header class="forecast-header">
+      <div>
+        <p class="forecast-kicker">Buenos Aires</p>
+        <h3 id="forecast-title">Pronóstico extendido</h3>
+      </div>
+      <button type="button" class="forecast-close" (click)="closeForecast()" aria-label="Cerrar">
+        Cerrar
+      </button>
+    </header>
+
+    <div class="forecast-grid">
+      <article
+        class="forecast-day"
+        *ngFor="let day of forecastDays; let i = index"
+        [class.is-today]="i === 0"
+      >
+        <p class="day-name">{{ day.dayLabel }}</p>
+        <p class="day-date">{{ day.dateLabel }}</p>
+
+        <div class="day-icon" aria-hidden="true">
+          <ng-container *ngTemplateOutlet="weatherIcon; context: { $implicit: day.condition }"></ng-container>
+        </div>
+
+        <p class="day-precip" *ngIf="day.precipLabel">{{ day.precipLabel }}</p>
+        <p class="day-precip day-precip-spacer" *ngIf="!day.precipLabel">&nbsp;</p>
+
+        <p class="day-temps">
+          <span class="temp-max">{{ day.tempMaxLabel }}</span>
+          <span class="temp-sep">/</span>
+          <span class="temp-min">{{ day.tempMinLabel }}</span>
+        </p>
+
+        <div class="day-wind">
+          <svg viewBox="0 0 24 24" class="wind-arrow" [style.transform]="'rotate(' + day.windDirection + 'deg)'" aria-hidden="true">
+            <path d="M12 3l4 7h-3v11h-2V10H8l4-7z"/>
+          </svg>
+          <span>{{ day.windLabel }}</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<ng-template #weatherIcon let-iconCondition>
+  <svg *ngIf="iconCondition === 'sunny'" viewBox="0 0 64 64" class="icon-svg">
+    <circle cx="32" cy="32" r="12" class="sun-core"/>
+    <g class="sun-rays">
+      <line x1="32" y1="6" x2="32" y2="14"/>
+      <line x1="32" y1="50" x2="32" y2="58"/>
+      <line x1="6" y1="32" x2="14" y2="32"/>
+      <line x1="50" y1="32" x2="58" y2="32"/>
+      <line x1="13" y1="13" x2="19" y2="19"/>
+      <line x1="45" y1="45" x2="51" y2="51"/>
+      <line x1="13" y1="51" x2="19" y2="45"/>
+      <line x1="45" y1="19" x2="51" y2="13"/>
+    </g>
+  </svg>
+
+  <svg *ngIf="iconCondition === 'partly'" viewBox="0 0 64 64" class="icon-svg">
+    <circle cx="24" cy="24" r="10" class="sun-core"/>
+    <g class="sun-rays sun-rays-small">
+      <line x1="24" y1="6" x2="24" y2="12"/>
+      <line x1="8" y1="24" x2="14" y2="24"/>
+      <line x1="12" y1="12" x2="16" y2="16"/>
+      <line x1="34" y1="12" x2="30" y2="16"/>
+    </g>
+    <path class="cloud-front" d="M48 46H22c-5.5 0-10-4-10-9s4.5-9 10-9c1.1-4.8 5.5-8.3 10.7-8.3 5.9 0 10.8 4.2 11.6 9.8C48.3 30 52 33.5 52 38c0 4.4-3.6 8-8 8z"/>
+  </svg>
+
+  <svg *ngIf="iconCondition === 'cloudy'" viewBox="0 0 64 64" class="icon-svg">
+    <path class="cloud-back" d="M44 40H20c-5.5 0-10-4-10-9s4.5-9 10-9c1.2-5.2 6-9 11.7-9 6.6 0 12 5 12.4 11.4C48.7 25 52 28.6 52 33c0 3.9-3.1 7-8 7z"/>
+    <path class="cloud-front" d="M46 46H18c-6 0-11-4.5-11-10s5-10 11-10c1.4-5.8 6.7-10 12.9-10 7.3 0 13.3 5.5 13.8 12.6C49.5 29.2 54 33.2 54 38c0 4.4-3.6 8-8 8z"/>
+  </svg>
+
+  <svg *ngIf="iconCondition === 'rainy'" viewBox="0 0 64 64" class="icon-svg">
+    <path class="cloud-front" d="M46 34H18c-6 0-11-4.5-11-10S12 14 18 14c1.4-5.8 6.7-10 12.9-10 7.3 0 13.3 5.5 13.8 12.6C49.5 17.2 54 21.2 54 26c0 4.4-3.6 8-8 8z"/>
+    <g class="rain-drops">
+      <path d="M22 40l-2 8"/>
+      <path d="M32 42l-2 8"/>
+      <path d="M42 40l-2 8"/>
+    </g>
+  </svg>
+</ng-template>

@@ -22,8 +22,12 @@ interface VariacionPayload {
   direccion: 'up' | 'down' | 'flat';
 }
 
-interface InflacionPayload {
+interface TasaBcraPayload {
   valor?: string;
+  codigo?: string;
+  nombre?: string;
+  meta?: string;
+  fecha?: string;
   periodo?: string;
   variacion?: VariacionPayload | null;
   historial?: HistorialMonth[];
@@ -37,15 +41,16 @@ interface HistorialViewMonth {
 }
 
 @Component({
-  selector: 'app-prensado',
-  templateUrl: './prensado.component.html',
-  styleUrls: ['./prensado.component.css'],
+  selector: 'app-tasabcra',
+  templateUrl: './tasabcra.component.html',
+  styleUrls: ['./tasabcra.component.css'],
 })
-export class PrensadoComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class TasabcraComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('historyBackdrop') historyBackdrop?: ElementRef<HTMLElement>;
 
-  inflacionmensual: string | undefined;
-  periodo: string | undefined;
+  valor: string | undefined;
+  nombre = 'Tasa BCRA';
+  meta = 'TNA';
   isLoading = true;
   variacionLabel = '';
   variacionDir: 'up' | 'down' | 'flat' | null = null;
@@ -55,13 +60,13 @@ export class PrensadoComponent implements OnInit, AfterViewChecked, OnDestroy {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getData('/inflacion-mensual').subscribe(
+    this.apiService.getData('/tasa-bcra').subscribe(
       (raw) => {
         this.applyPayload(raw);
         this.isLoading = false;
       },
       (error) => {
-        console.log('Error al obtener la ultima inflacion mensual:', error);
+        console.log('Error al obtener la tasa BCRA:', error);
         this.isLoading = false;
       }
     );
@@ -101,13 +106,14 @@ export class PrensadoComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   private applyPayload(raw: string): void {
     try {
-      const data = JSON.parse(raw) as InflacionPayload;
-      this.inflacionmensual = data.valor ?? raw;
-      this.periodo = data.periodo || undefined;
+      const data = JSON.parse(raw) as TasaBcraPayload;
+      this.valor = data.valor;
+      this.nombre = data.nombre || this.nombre;
+      this.meta = data.meta || this.meta;
       this.applyVariacion(data.variacion);
       this.historial = (data.historial || []).map((month) => this.toHistorialView(month));
     } catch {
-      this.inflacionmensual = raw;
+      this.valor = raw;
     }
   }
 
@@ -120,7 +126,7 @@ export class PrensadoComponent implements OnInit, AfterViewChecked, OnDestroy {
     const pct = Number(variacion.porcentaje);
     const sign = pct > 0 ? '+' : '';
     const unit = variacion.unidad === 'pp' ? ' pp' : '%';
-    this.variacionLabel = `${sign}${pct.toFixed(1).replace('.', ',')}${unit}`;
+    this.variacionLabel = `${sign}${pct.toFixed(2).replace('.', ',')}${unit}`;
     this.variacionDir = variacion.direccion || (pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat');
   }
 
@@ -131,7 +137,7 @@ export class PrensadoComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     if (delta != null && Number.isFinite(delta)) {
       const sign = delta > 0 ? '+' : '';
-      deltaLabel = `${sign}${delta.toFixed(1).replace('.', ',')} pp`;
+      deltaLabel = `${sign}${delta.toFixed(2).replace('.', ',')} pp`;
       direccion = delta > 0 ? 'up' : delta < 0 ? 'down' : 'flat';
     }
 

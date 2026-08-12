@@ -1,14 +1,7 @@
-<div class="data-container">
-    <!-- Mostrar los datos obtenidos del servicio -->
-    <mat-card class="card">
-      <div class="container">
-        <p class="temperature">Inflación</p>
-        <p class="value">Anualizada</p>
-        <p *ngIf="isLoading; else goldData" class="loading-dots"></p>
-        <ng-template #goldData>
-        <p class="value">%{{ inflacionanualizada }}</p>
-      </ng-template>
-      </div>
-    </mat-card>
-  </div>
-  
+<article class="widget widget-wide">
+  <p class="widget-kicker">INDEC</p>
+  <p class="widget-title">Inflación interanual</p>
+  <p class="widget-meta" *ngIf="periodo">{{ periodo }}</p>
+  <p class="widget-value" *ngIf="!isLoading">{{ inflacionanualizada }}%</p>
+  <p class="widget-value loading-dots" *ngIf="isLoading"></p>
+</article>

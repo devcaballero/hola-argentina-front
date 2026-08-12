@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 
+interface InflacionPayload {
+  valor?: string;
+  periodo?: string;
+}
+
 @Component({
   selector: 'app-inflacionanual',
   templateUrl: './inflacionanual.component.html',
@@ -8,21 +13,31 @@ import { ApiService } from '../api.service';
 })
 export class InflacionanualComponent implements OnInit {
   inflacionanualizada: string | undefined;
-  isLoading: boolean = true;
+  periodo: string | undefined;
+  isLoading = true;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    const url = 'https://price-webscraper.onrender.com/api/v1/inflacion-anualizada';
-    this.apiService.getData(url).subscribe(
-      (data) => {
-        this.inflacionanualizada = data;
-        this.isLoading = false; // Marcar como no cargando cuando se obtiene la información
+    this.apiService.getData('/inflacion-anualizada').subscribe(
+      (raw) => {
+        this.applyPayload(raw);
+        this.isLoading = false;
       },
       (error) => {
         console.log('Error al obtener los datos de la inflacion anual:', error);
-        this.isLoading = false; // Marcar como no cargando en caso de error también
+        this.isLoading = false;
       }
     );
+  }
+
+  private applyPayload(raw: string): void {
+    try {
+      const data = JSON.parse(raw) as InflacionPayload;
+      this.inflacionanualizada = data.valor ?? raw;
+      this.periodo = data.periodo || undefined;
+    } catch {
+      this.inflacionanualizada = raw;
+    }
   }
 }

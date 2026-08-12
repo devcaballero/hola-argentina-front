@@ -13,7 +13,7 @@ export class HeinekenComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    const url = 'https://price-webscraper.onrender.com/api/v1/heineken';
+    const url = '/heineken';
     this.apiService.getData(url).subscribe(
       (data) => {
         this.heineken = data;

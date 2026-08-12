@@ -1,18 +1,18 @@
 <article
-  class="widget"
+  class="widget widget-wide"
   [class.widget-clickable]="historial.length"
   (click)="openHistory()"
   (keydown.enter)="openHistory()"
   (keydown.space)="$event.preventDefault(); openHistory()"
   [attr.role]="historial.length ? 'button' : null"
   [attr.tabindex]="historial.length ? 0 : null"
-  [attr.aria-label]="historial.length ? 'Ver historial de Oro últimos 7 días' : null"
+  [attr.aria-label]="historial.length ? 'Ver historial de tasa BCRA últimos 6 meses' : null"
 >
   <div class="widget-head">
     <div>
-      <p class="widget-kicker">Metal</p>
-      <p class="widget-title">Oro</p>
-      <p class="widget-meta">Por onza</p>
+      <p class="widget-kicker">BCRA</p>
+      <p class="widget-title">Tasa de interés</p>
+      <p class="widget-meta">{{ nombre }} · TNA</p>
     </div>
     <span
       *ngIf="variacionLabel"
@@ -23,14 +23,14 @@
     >{{ variacionLabel }}</span>
   </div>
 
-  <p class="widget-value" *ngIf="!isLoading">U$S {{ precioLabel }}</p>
+  <p class="widget-value" *ngIf="!isLoading">{{ valor }}%</p>
   <p class="widget-value loading-dots" *ngIf="isLoading"></p>
   <a
     *ngIf="!isLoading && historial.length"
     class="widget-hint"
     href="#"
     (click)="$event.preventDefault(); $event.stopPropagation(); openHistory()"
-  >Últimos 7 días</a>
+  >Últimos 6 meses</a>
 </article>
 
 <div
@@ -45,12 +45,12 @@
     (click)="$event.stopPropagation()"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="oro-history-title"
+    aria-labelledby="tasa-bcra-title"
   >
     <header class="fx-header">
       <div>
-        <p class="fx-kicker">Oro · onza</p>
-        <h3 id="oro-history-title">Últimos 7 días</h3>
+        <p class="fx-kicker">BCRA · {{ nombre }}</p>
+        <h3 id="tasa-bcra-title">Últimos 6 meses</h3>
       </div>
       <button type="button" class="fx-close" (click)="closeHistory()" aria-label="Cerrar">
         Cerrar
@@ -60,20 +60,19 @@
     <div class="fx-list">
       <article
         class="fx-day"
-        *ngFor="let day of historial; let last = last"
+        *ngFor="let month of historial; let last = last"
         [class.is-latest]="last"
       >
         <div class="fx-day-meta">
-          <p class="fx-day-name">{{ day.dayLabel }}</p>
-          <p class="fx-day-date">{{ day.dateLabel }}</p>
+          <p class="fx-day-name">{{ month.periodo }}</p>
         </div>
-        <p class="fx-day-price">{{ day.precioLabel }}</p>
+        <p class="fx-day-price">{{ month.valorLabel }}</p>
         <span
           class="fx-day-delta"
-          [class.is-up]="day.direccion === 'up'"
-          [class.is-down]="day.direccion === 'down'"
-          [class.is-flat]="day.direccion === 'flat'"
-        >{{ day.variacionLabel }}</span>
+          [class.is-up]="month.direccion === 'up'"
+          [class.is-down]="month.direccion === 'down'"
+          [class.is-flat]="month.direccion === 'flat'"
+        >{{ month.deltaLabel }}</span>
       </article>
     </div>
   </div>
