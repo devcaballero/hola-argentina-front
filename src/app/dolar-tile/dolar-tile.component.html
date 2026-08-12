@@ -1,18 +1,18 @@
 <article
   class="widget"
+  [class.widget-accent]="accent"
   [class.widget-clickable]="historial.length"
   (click)="openHistory()"
   (keydown.enter)="openHistory()"
   (keydown.space)="$event.preventDefault(); openHistory()"
   [attr.role]="historial.length ? 'button' : null"
   [attr.tabindex]="historial.length ? 0 : null"
-  [attr.aria-label]="historial.length ? 'Ver historial de Oro últimos 7 días' : null"
+  [attr.aria-label]="historial.length ? 'Ver historial de ' + title + ' últimos 7 días' : null"
 >
   <div class="widget-head">
     <div>
-      <p class="widget-kicker">Metal</p>
-      <p class="widget-title">Oro</p>
-      <p class="widget-meta">Por onza</p>
+      <p class="widget-kicker">Dólar</p>
+      <p class="widget-title">{{ title }}</p>
     </div>
     <span
       *ngIf="variacionLabel"
@@ -23,7 +23,16 @@
     >{{ variacionLabel }}</span>
   </div>
 
-  <p class="widget-value" *ngIf="!isLoading">U$S {{ precioLabel }}</p>
+  <div class="widget-rates" *ngIf="!isLoading">
+    <div class="rate-row">
+      <span class="rate-label">Compra</span>
+      <span class="rate-value">${{ compra }}</span>
+    </div>
+    <div class="rate-row">
+      <span class="rate-label">Venta</span>
+      <span class="rate-value">${{ venta }}</span>
+    </div>
+  </div>
   <p class="widget-value loading-dots" *ngIf="isLoading"></p>
   <a
     *ngIf="!isLoading && historial.length"
@@ -45,12 +54,12 @@
     (click)="$event.stopPropagation()"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="oro-history-title"
+    [attr.aria-labelledby]="'fx-title-' + title"
   >
     <header class="fx-header">
       <div>
-        <p class="fx-kicker">Oro · onza</p>
-        <h3 id="oro-history-title">Últimos 7 días</h3>
+        <p class="fx-kicker">Dólar {{ title }}</p>
+        <h3 [id]="'fx-title-' + title">Últimos 7 días</h3>
       </div>
       <button type="button" class="fx-close" (click)="closeHistory()" aria-label="Cerrar">
         Cerrar
@@ -67,7 +76,10 @@
           <p class="fx-day-name">{{ day.dayLabel }}</p>
           <p class="fx-day-date">{{ day.dateLabel }}</p>
         </div>
-        <p class="fx-day-price">{{ day.precioLabel }}</p>
+        <div class="fx-day-rates">
+          <span>C {{ day.compraLabel }}</span>
+          <span>V {{ day.ventaLabel }}</span>
+        </div>
         <span
           class="fx-day-delta"
           [class.is-up]="day.direccion === 'up'"

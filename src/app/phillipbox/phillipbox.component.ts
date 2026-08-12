@@ -13,7 +13,7 @@ export class PhillipboxComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    const url = 'https://price-webscraper.onrender.com/api/v1/phillipbox';
+    const url = '/phillipbox';
     this.apiService.getData(url).subscribe(
       (data) => {
         this.phillipbox = data;

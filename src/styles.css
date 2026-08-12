@@ -1,228 +1,176 @@
-  /* You can add global styles to this file, and also import other style files */
-  @import '@angular/material/prebuilt-themes/indigo-pink.css';
-  /* styles.css */
-  
-  /* Apply the Roboto font to the entire application */
-  body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #000000 !important;; /* Cambia este valor al color que desees */
-    }
-    
-    /* Optionally, apply the Poppins font to specific elements */
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Poppins', sans-serif;
-    }
-
-
-/* Estilos para pantallas pequeñas (móviles) */
-@media (max-width: 768px) {
-  /* You can add global styles to this file, and also import other style files */
-
-.card {
-  align-items: center;
-  height: 85px;
-  width: 65px;
-  padding: 2px;
-  background-color: #242424 !important;
-  border-radius: 5px;
-  border: 4px solid #5a5c5a !important;
+:root {
+  --bg-0: #12151c;
+  --bg-1: #1a2030;
+  --ink: #f4efe6;
+  --muted: rgba(244, 239, 230, 0.62);
+  --line: rgba(244, 239, 230, 0.12);
+  --widget: rgba(28, 34, 48, 0.78);
+  --accent: #e8a04d;
+  --accent-soft: rgba(232, 160, 77, 0.16);
+  --ok: #7dcea0;
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --radius: 1.35rem;
 }
 
-.temperature {
-  font-size: 12px;
-  font-weight: bold;
-  margin: 1px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-decoration: underline;
-  color: #48db77; /* Soft blue color for the temperature */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.value {
-  font-size: 10px;
-  color: #ffffff; /* Soft green color for value1 and value2 */
-  margin: 1px 0;
-  margin-bottom: 1px;
+html,
+body {
+  margin: 0;
+  min-height: 100%;
 }
 
-.value-temp {
-  font-size: 14px;
-  color: #ffffff; /* Soft green color for value1 and value2 */
-  margin: 1px;
-  margin-top: 5px;
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg-0);
+  -webkit-font-smoothing: antialiased;
 }
 
-.fecha-actual {
-  font-size: 14px;
-  color: #ffffff; /* Soft blue color for the date */
-  margin-bottom: 10px; /* Ajusta el margen inferior según tu preferencia */
-  margin-top: 5px;
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
 }
 
-/* Estilo para el párrafo en letra pequeña */
-.small-text {
-  font-size: 14px;
-  margin-bottom: 5px;
-  margin-top: 10px;
-  color: #ffffff; 
+p {
+  margin: 0;
+}
+
+app-dolar,
+app-dolarblue,
+app-bitcoin,
+app-oro,
+app-prensado,
+app-inflacionanual,
+app-tasabcra,
+app-minimosube,
+app-nafta,
+app-asado,
+app-pan,
+app-bigmac {
+  display: contents;
+}
+
+.widget {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 8.5rem;
+  padding: 1rem 1.05rem 1.05rem;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.06), transparent 42%),
+    var(--widget);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: transform 220ms ease, border-color 220ms ease;
+}
+
+.widget::after {
+  content: '';
+  position: absolute;
+  inset: auto -20% -45% auto;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-soft), transparent 70%);
+  pointer-events: none;
+}
+
+.widget:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232, 160, 77, 0.35);
+}
+
+.widget-accent {
+  background:
+    linear-gradient(165deg, rgba(232, 160, 77, 0.18), transparent 50%),
+    var(--widget);
+}
+
+.widget-wide {
+  min-height: 7.5rem;
+}
+
+.widget-kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.widget-title {
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.widget-meta {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.widget-value {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.widget-rates {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+}
+
+.rate-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.rate-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rate-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
 .loading-dots::after {
-  font-size: 10px;
-  color: #ffffff; /* Soft green color for value1 and value2 */
   content: '...';
+  color: var(--muted);
   animation: loading 1s infinite;
 }
 
 @keyframes loading {
-  0% { content: '.' }
-  33% { content: '..' }
-  66% { content: '...' }
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
 }
-
-
-}
-
-/* Estilos para pantallas medianas (tablets) */
-@media (min-width: 769px) and (max-width: 1024px) {
-  /* Ajusta estilos para tablets aquí */
-  
-  .card {
-    align-items: center;
-    height: 115px;
-    width: 130px;
-    padding: 5px;
-    background-color: #242424 !important;
-    border-radius: 5px;
-    border: 4px solid #5a5c5a !important;
-  }
-  
-  .temperature {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 1px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    text-decoration: underline;
-    color: #48db77; /* Soft blue color for the temperature */
-  }
-  
-  .value {
-    font-size: 16px;
-    color: #ffffff; /* Soft green color for value1 and value2 */
-    margin: 1px 0;
-    margin-bottom: 1px;
-  }
-  
-  .value-temp {
-    font-size: 24px;
-    color: #ffffff; /* Soft green color for value1 and value2 */
-    margin: 1px;
-    margin-top: 5px;
-  }
-  
-  .fecha-actual {
-    font-size: 20px;
-    color: #ffffff; /* Soft blue color for the date */
-    margin-bottom: 10px; /* Ajusta el margen inferior según tu preferencia */
-    margin-top: 5px;
-  }
-  
-  /* Estilo para el párrafo en letra pequeña */
-  .small-text {
-    font-size: 18px;
-    margin-bottom: 5px;
-    margin-top: 10px;
-    color: #ffffff; 
-  }
-  
-  
-  .loading-dots::after {
-    font-size: 16px;
-    color: #ffffff; /* Soft green color for value1 and value2 */
-    content: '...';
-    animation: loading 1s infinite;
-  }
-  
-  @keyframes loading {
-    0% { content: '.' }
-    33% { content: '..' }
-    66% { content: '...' }
-  }
-
-}
-
-/* Estilos para pantallas grandes (PCs) */
-@media (min-width: 1025px) {
-
-/* Estilo para tu mat-card específico */
-.card {
-  align-items: center;
-  height: 120px;
-  width: 150px;
-  padding: 5px;
-  background-color: #242424 !important;
-  border-radius: 5px;
-  border: 4px solid #5a5c5a !important;
-}
-
-.temperature {
-  font-size: 22px;
-  font-weight: bold;
-  margin: 1px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-decoration: underline;
-  color: #48db77; /* Soft blue color for the temperature */
-}
-
-.value {
-  font-size: 18px;
-  color: #ffffff; /* Soft green color for value1 and value2 */
-  margin: 1px 0;
-  margin-bottom: 1px;
-}
-
-.value-temp {
-  font-size: 26px;
-  color: #ffffff; /* Soft green color for value1 and value2 */
-  margin: 1px;
-  margin-top: 5px;
-}
-
-.fecha-actual {
-  font-size: 22px;
-  color: #ffffff; /* Soft blue color for the date */
-  margin-bottom: 10px; /* Ajusta el margen inferior según tu preferencia */
-  margin-top: 5px;
-}
-
-/* Estilo para el párrafo en letra pequeña */
-.small-text {
-  font-size: 20px;
-  margin-bottom: 5px;
-  margin-top: 10px;
-  color: #ffffff; 
-}
-
-
-.loading-dots::after {
-  font-size: 18px;
-  color: #ffffff; /* Soft green color for value1 and value2 */
-  content: '...';
-  animation: loading 1s infinite;
-}
-
-@keyframes loading {
-  0% { content: '.' }
-  33% { content: '..' }
-  66% { content: '...' }
-}
-
-
-}
-
-
-
-
-

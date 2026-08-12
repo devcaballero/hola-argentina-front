@@ -14,7 +14,7 @@ export class BigmacComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    const url = 'https://price-webscraper.onrender.com/api/v1/bigmac';
+    const url = '/bigmac';
     this.apiService.getData(url).subscribe(
       (data) => {
         this.bigmac = data;

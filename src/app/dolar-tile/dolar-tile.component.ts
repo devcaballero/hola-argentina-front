@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  Input,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -12,7 +13,8 @@ import { formatArDecimal } from '../format-ar';
 
 interface HistorialDay {
   fecha: string;
-  precio: number;
+  compra: number | null;
+  venta: number;
   variacionPct: number | null;
 }
 
@@ -22,9 +24,9 @@ interface VariacionPayload {
   direccion: 'up' | 'down' | 'flat';
 }
 
-interface BitcoinPayload {
-  precio?: number;
-  precioLabel?: string;
+interface DolarPayload {
+  compra?: string | number;
+  venta?: string | number;
   variacion?: VariacionPayload | null;
   historial?: HistorialDay[];
 }
@@ -33,20 +35,26 @@ interface HistorialViewDay {
   fecha: string;
   dayLabel: string;
   dateLabel: string;
-  precioLabel: string;
+  compraLabel: string;
+  ventaLabel: string;
   variacionLabel: string;
   direccion: 'up' | 'down' | 'flat';
 }
 
 @Component({
-  selector: 'app-bitcoin',
-  templateUrl: './bitcoin.component.html',
-  styleUrls: ['./bitcoin.component.css'],
+  selector: 'app-dolar-tile',
+  templateUrl: './dolar-tile.component.html',
+  styleUrls: ['./dolar-tile.component.css'],
 })
-export class BitcoinComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class DolarTileComponent implements OnInit, AfterViewChecked, OnDestroy {
+  @Input() title = '';
+  @Input() endpoint = '';
+  @Input() accent = false;
+
   @ViewChild('historyBackdrop') historyBackdrop?: ElementRef<HTMLElement>;
 
-  precioLabel: string | undefined;
+  compra: string | undefined;
+  venta: string | undefined;
   isLoading = true;
   variacionLabel = '';
   variacionDir: 'up' | 'down' | 'flat' | null = null;
@@ -56,13 +64,13 @@ export class BitcoinComponent implements OnInit, AfterViewChecked, OnDestroy {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getData('/bitcoin').subscribe(
+    this.apiService.getData(this.endpoint).subscribe(
       (raw) => {
-        this.applyPayload(raw);
+        this.applyCotizacion(raw);
         this.isLoading = false;
       },
       (error) => {
-        console.log('Error al obtener bitcoin:', error);
+        console.log(`Error al obtener ${this.endpoint}:`, error);
         this.isLoading = false;
       }
     );
@@ -100,16 +108,15 @@ export class BitcoinComponent implements OnInit, AfterViewChecked, OnDestroy {
     document.body.style.overflow = '';
   }
 
-  private applyPayload(raw: string): void {
+  private applyCotizacion(raw: string): void {
     try {
-      const data = JSON.parse(raw) as BitcoinPayload;
-      this.precioLabel =
-        data.precioLabel ||
-        (data.precio != null ? formatArDecimal(data.precio) : undefined);
+      const data = JSON.parse(raw) as DolarPayload;
+      this.compra = formatArDecimal(data.compra);
+      this.venta = formatArDecimal(data.venta);
       this.applyVariacion(data.variacion);
       this.historial = (data.historial || []).map((day) => this.toHistorialView(day));
     } catch {
-      this.precioLabel = formatArDecimal(raw);
+      this.venta = formatArDecimal(raw);
     }
   }
 
@@ -119,6 +126,7 @@ export class BitcoinComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.variacionDir = null;
       return;
     }
+
     const pct = Number(variacion.porcentaje);
     const sign = pct > 0 ? '+' : '';
     this.variacionLabel = `${sign}${pct.toFixed(2).replace('.', ',')}%`;
@@ -141,7 +149,8 @@ export class BitcoinComponent implements OnInit, AfterViewChecked, OnDestroy {
       fecha: day.fecha,
       dayLabel: this.dayLabel(day.fecha, date),
       dateLabel: this.dateLabel(date),
-      precioLabel: `U$S ${formatArDecimal(day.precio)}`,
+      compraLabel: day.compra == null ? '—' : `$${formatArDecimal(day.compra)}`,
+      ventaLabel: `$${formatArDecimal(day.venta)}`,
       variacionLabel,
       direccion,
     };
@@ -156,6 +165,7 @@ export class BitcoinComponent implements OnInit, AfterViewChecked, OnDestroy {
     return days[date.getDay()];
   }
 
+  /** YYYY-MM-DD en zona Argentina, con offset de días. */
   private arDateIso(dayOffset: number): string {
     const parts = new Intl.DateTimeFormat('en-CA', {
       timeZone: 'America/Argentina/Buenos_Aires',
