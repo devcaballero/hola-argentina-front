@@ -1,3 +1,7 @@
+:host {
+  display: contents;
+}
+
 .widget-head {
   display: flex;
   align-items: flex-start;
@@ -128,7 +132,7 @@
 
 .fx-day {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) auto;
   align-items: center;
   gap: 0.65rem;
   padding: 0.75rem 0.85rem;
@@ -156,20 +160,16 @@
   color: rgba(244, 239, 230, 0.55);
 }
 
-.fx-day-price {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 600;
+.fx-day-rates {
+  display: grid;
+  gap: 0.15rem;
+  font-size: 0.82rem;
+  color: rgba(244, 239, 230, 0.78);
   font-variant-numeric: tabular-nums;
-  color: rgba(244, 239, 230, 0.88);
-  text-align: right;
 }
 
 .fx-day-delta {
   justify-self: end;
-  min-width: 4.5rem;
-  text-align: right;
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 600;
@@ -206,13 +206,10 @@
     grid-template-columns: 1fr auto;
     grid-template-areas:
       'meta delta'
-      'price price';
+      'rates rates';
   }
 
   .fx-day-meta { grid-area: meta; }
   .fx-day-delta { grid-area: delta; }
-  .fx-day-price {
-    grid-area: price;
-    text-align: left;
-  }
+  .fx-day-rates { grid-area: rates; }
 }

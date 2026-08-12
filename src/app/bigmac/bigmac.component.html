@@ -1,13 +1,6 @@
-<div class="data-container">
-    <!-- Mostrar los datos obtenidos del servicio -->
-    <mat-card class="card">
-      <div class="container">
-         <p class="temperature">Bigmac</p> 
-         <p class="value"><br></p>
-         <p *ngIf="isLoading; else goldData" class="loading-dots"></p>
-         <ng-template #goldData>
-         <p class="value">${{ bigmac }}</p>
-        </ng-template>
-      </div>
-    </mat-card>
-  </div>
+<article class="widget">
+  <p class="widget-kicker">Índice</p>
+  <p class="widget-title">Big Mac</p>
+  <p class="widget-value" *ngIf="!isLoading">${{ bigmac }}</p>
+  <p class="widget-value loading-dots" *ngIf="isLoading"></p>
+</article>

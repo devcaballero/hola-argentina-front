@@ -16,7 +16,7 @@ export class AsadoComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    const url = 'https://price-webscraper.onrender.com/api/v1/promedio-precio-asado';
+    const url = '/promedio-precio-asado';
     this.apiService.getData(url).subscribe(
       (data) => {
         this.asado = data;

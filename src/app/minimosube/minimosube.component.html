@@ -1,14 +1,7 @@
-<div class="data-container">
-    <!-- Mostrar los datos obtenidos del servicio -->
-    <mat-card class="card">
-      <div class="container">
-        <p class="temperature">Bondi</p>
-        <p class="value">Min. (AMBA)</p>
-        <p *ngIf="isLoading; else goldData" class="loading-dots"></p>
-        <ng-template #goldData>
-        <p class="value">${{ minimosube }}</p>
-      </ng-template>
-      </div>
-    </mat-card>
-  </div>
-  
+<article class="widget">
+  <p class="widget-kicker">Transporte</p>
+  <p class="widget-title">Bondi</p>
+  <p class="widget-meta">Mín. AMBA</p>
+  <p class="widget-value" *ngIf="!isLoading">${{ minimosube }}</p>
+  <p class="widget-value loading-dots" *ngIf="isLoading"></p>
+</article>

@@ -14,7 +14,7 @@ export class PanComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    const url = 'https://price-webscraper.onrender.com/api/v1/promedio-precio-pan';
+    const url = '/promedio-precio-pan';
     this.apiService.getData(url).subscribe(
       (data) => {
         this.pan = data;

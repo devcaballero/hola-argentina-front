@@ -13,7 +13,7 @@ export class CocacolaComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    const url = 'https://price-webscraper.onrender.com/api/v1/cocacola';
+    const url = '/cocacola';
     this.apiService.getData(url).subscribe(
       (data) => {
         this.cocacola = data;

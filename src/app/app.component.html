@@ -1,79 +1,71 @@
-<!-- app.component.html -->
+<div class="shell">
+  <div class="shell-glow" aria-hidden="true"></div>
 
-<div class="container">
-  <h1>Bienvenido al Panel Informativo</h1>
-  <p class="fecha-actual">Hoy es {{ fechaActual }}</p>
-  <p *ngIf="showClock" class="vintage-clock">{{ horaActual }}  </p>
-  
-  <app-temperature></app-temperature>
-  
-  <p class="small-text">Toda la info importante de Argentina y el mundo en un solo lugar</p>
+  <header class="hero">
+    <div class="hero-copy">
+      <div class="hero-copy-inner">
+        <p class="brand">Hola Argentina</p>
+        <h1>{{ saludo }}</h1>
+        <p class="hero-date">{{ fechaActual }}</p>
+      </div>
+    </div>
 
-  <div class="table-responsive">
-    <table class="table">
-    <tr> 
-      <td>
+    <div class="hero-side">
+      <div class="clock-widget day-widget">
+        <span class="clock-label">Día</span>
+        <span class="clock-value">{{ diaCorto }}</span>
+      </div>
+      <div class="clock-widget" *ngIf="showClock">
+        <span class="clock-label">Hora actual</span>
+        <span class="clock-value">{{ horaActual }}</span>
+      </div>
+      <app-temperature></app-temperature>
+    </div>
+  </header>
+
+  <main class="board">
+    <section class="section section-enter" style="--delay: 0.05s">
+      <div class="section-head">
+        <h2>Cotizaciones</h2>
+        <p>Pulso diario del mercado</p>
+      </div>
+      <div class="widget-grid">
         <app-dolar></app-dolar>
-      </td>
-      <td>
         <app-dolarblue></app-dolarblue>
-      </td>
-      <td>
-        <app-prensado></app-prensado>
-      </td> 
-      <td>
-        <app-inflacionanual></app-inflacionanual>
-      </td>
-      <td>
         <app-bitcoin></app-bitcoin>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <app-minimosube></app-minimosube>
-      </td>       
-      <td>
-        <app-merca></app-merca>
-      </td>      
-      <td>
-        <app-heineken></app-heineken>
-      </td>
-      <td>
-        <app-cocacola></app-cocacola>
-      </td>
-      <td>
-        <app-flores></app-flores>
-      </td>          
-    </tr>
-    <tr>
-      <td>
-        <app-bigmac></app-bigmac>
-      </td>   
-      <td>
         <app-oro></app-oro>
-      </td>
-      <td>
-        <app-forrosprime></app-forrosprime>
-      </td>    
-      <td>
-        <app-phillipbox></app-phillipbox>
-      </td>
-      <td>
-        <app-nafta></app-nafta>
-      </td>                             
-    </tr>
-    <tr>
-      <td>
-        <app-asado></app-asado>
-      </td>
-      <td>
-        <app-pan></app-pan>
-      </td>  
-    </tr>   
-  </table>
-</div>
+      </div>
+    </section>
 
-<br>
-<footer>
-  <p class="small-text">v1.0.0 - © 08/2023 </p>
-</footer>
+    <section class="section section-enter" style="--delay: 0.12s">
+      <div class="section-head">
+        <h2>Economía</h2>
+        <p>IPC INDEC · tasas BCRA</p>
+      </div>
+      <div class="widget-grid widget-grid-economy">
+        <app-prensado></app-prensado>
+        <app-inflacionanual></app-inflacionanual>
+        <app-tasabcra></app-tasabcra>
+      </div>
+    </section>
+
+    <section class="section section-enter" style="--delay: 0.2s">
+      <div class="section-head">
+        <h2>Día a día</h2>
+        <p>Canasta cotidiana</p>
+      </div>
+      <div class="widget-grid">
+        <app-minimosube></app-minimosube>
+        <app-nafta></app-nafta>
+        <app-asado></app-asado>
+        <app-pan></app-pan>
+        <app-bigmac></app-bigmac>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Argentina · Próxima actualización: {{ proximaActualizacion }} hs</p>
+    <p class="app-version">{{ appVersion }}</p>
+  </footer>
+</div>

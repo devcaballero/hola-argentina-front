@@ -1,14 +1,7 @@
-<div class="data-container">
-    <!-- Mostrar los datos obtenidos del servicio -->
-    <mat-card class="card">
-      <div class="container">
-        <p class="temperature">Nafta</p>
-        <p class="value">Super/L</p>
-        <p *ngIf="isLoading; else goldData" class="loading-dots"></p>
-        <ng-template #goldData>
-        <p class="value">${{ nafta }}</p>
-      </ng-template>
-      </div>
-    </mat-card>
-  </div>
-  
+<article class="widget">
+  <p class="widget-kicker">Combustible</p>
+  <p class="widget-title">Nafta</p>
+  <p class="widget-meta">Super / L</p>
+  <p class="widget-value" *ngIf="!isLoading">${{ nafta }}</p>
+  <p class="widget-value loading-dots" *ngIf="isLoading"></p>
+</article>

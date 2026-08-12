@@ -1,13 +1,79 @@
-<div class="data-container">
-    <!-- Mostrar los datos obtenidos del servicio -->
-    <mat-card class="card">
-      <div class="container">
-        <p class="temperature">Inflación</p>
-        <p class="value">Mensual</p>
-        <p *ngIf="isLoading; else goldData" class="loading-dots"></p>
-        <ng-template #goldData>
-          <p class="value">%{{ inflacionmensual }}</p>
-      </ng-template>
-      </div>
-    </mat-card>
+<article
+  class="widget widget-wide"
+  [class.widget-clickable]="historial.length"
+  (click)="openHistory()"
+  (keydown.enter)="openHistory()"
+  (keydown.space)="$event.preventDefault(); openHistory()"
+  [attr.role]="historial.length ? 'button' : null"
+  [attr.tabindex]="historial.length ? 0 : null"
+  [attr.aria-label]="historial.length ? 'Ver historial de inflación mensual últimos 6 meses' : null"
+>
+  <div class="widget-head">
+    <div>
+      <p class="widget-kicker">INDEC</p>
+      <p class="widget-title">Inflación mensual</p>
+      <p class="widget-meta" *ngIf="periodo">{{ periodo }}</p>
+    </div>
+    <span
+      *ngIf="variacionLabel"
+      class="widget-delta"
+      [class.is-up]="variacionDir === 'up'"
+      [class.is-down]="variacionDir === 'down'"
+      [class.is-flat]="variacionDir === 'flat'"
+    >{{ variacionLabel }}</span>
   </div>
+
+  <p class="widget-value" *ngIf="!isLoading">{{ inflacionmensual }}%</p>
+  <p class="widget-value loading-dots" *ngIf="isLoading"></p>
+  <a
+    *ngIf="!isLoading && historial.length"
+    class="widget-hint"
+    href="#"
+    (click)="$event.preventDefault(); $event.stopPropagation(); openHistory()"
+  >Últimos 6 meses</a>
+</article>
+
+<div
+  #historyBackdrop
+  class="fx-backdrop"
+  *ngIf="historyOpen"
+  (click)="closeHistory()"
+  role="presentation"
+>
+  <div
+    class="fx-modal"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ipc-mensual-title"
+  >
+    <header class="fx-header">
+      <div>
+        <p class="fx-kicker">INDEC · IPC</p>
+        <h3 id="ipc-mensual-title">Inflación mensual</h3>
+      </div>
+      <button type="button" class="fx-close" (click)="closeHistory()" aria-label="Cerrar">
+        Cerrar
+      </button>
+    </header>
+
+    <div class="fx-list">
+      <article
+        class="fx-day"
+        *ngFor="let month of historial; let last = last"
+        [class.is-latest]="last"
+      >
+        <div class="fx-day-meta">
+          <p class="fx-day-name">{{ month.periodo }}</p>
+        </div>
+        <p class="fx-day-price">{{ month.valorLabel }}</p>
+        <span
+          class="fx-day-delta"
+          [class.is-up]="month.direccion === 'up'"
+          [class.is-down]="month.direccion === 'down'"
+          [class.is-flat]="month.direccion === 'flat'"
+        >{{ month.deltaLabel }}</span>
+      </article>
+    </div>
+  </div>
+</div>
