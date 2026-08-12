@@ -23,7 +23,8 @@
     >{{ variacionLabel }}</span>
   </div>
 
-  <p class="widget-value" *ngIf="!isLoading">{{ valor }}%</p>
+  <p class="widget-value" *ngIf="!isLoading && valor">{{ valor }}%</p>
+  <p class="widget-value" *ngIf="!isLoading && !valor">—</p>
   <p class="widget-value loading-dots" *ngIf="isLoading"></p>
   <a
     *ngIf="!isLoading && historial.length"
