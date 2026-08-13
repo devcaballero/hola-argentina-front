@@ -15,6 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   fechaActual: string = '';
   horaActual: string = '';
   diaCorto: string = '';
+  mesCorto: string = '';
   saludo: string = 'Hola';
   showClock: boolean = false;
   proximaActualizacion: string = '';
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const diasCortos = ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'];
     const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const mesesCortos = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
 
     const diaSemana = dias[fecha.getDay()];
     const dia = fecha.getDate();
@@ -61,6 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const anio = fecha.getFullYear();
 
     this.diaCorto = diasCortos[fecha.getDay()];
+    this.mesCorto = mesesCortos[fecha.getMonth()];
     this.fechaActual = `Hoy es ${diaSemana}, ${dia} de ${mes} de ${anio}`;
   }
 
