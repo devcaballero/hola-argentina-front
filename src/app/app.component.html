@@ -11,13 +11,17 @@
     </div>
 
     <div class="hero-side">
+      <div class="clock-widget" *ngIf="showClock">
+        <span class="clock-label">Hora actual</span>
+        <span class="clock-value">{{ horaActual }}</span>
+      </div>
       <div class="clock-widget day-widget">
         <span class="clock-label">Día</span>
         <span class="clock-value">{{ diaCorto }}</span>
       </div>
-      <div class="clock-widget" *ngIf="showClock">
-        <span class="clock-label">Hora actual</span>
-        <span class="clock-value">{{ horaActual }}</span>
+      <div class="clock-widget day-widget">
+        <span class="clock-label">Mes</span>
+        <span class="clock-value">{{ mesCorto }}</span>
       </div>
       <app-temperature></app-temperature>
     </div>
