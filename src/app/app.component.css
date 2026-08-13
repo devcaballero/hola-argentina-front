@@ -38,24 +38,46 @@
 }
 
 .brand {
-  margin-bottom: 0.55rem;
+  margin: 0 0 0.55rem;
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
+.hero-copy-inner {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: max-content;
+  max-width: 100%;
+  text-align: left;
+}
+
+.hero-copy-inner > * {
+  margin-left: 0;
+  padding-left: 0;
+}
+
 .hero h1 {
+  margin: 0;
   font-size: clamp(2.2rem, 5vw, 3.6rem);
   line-height: 1.02;
-  letter-spacing: -0.01em;
-  max-width: 14ch;
+  letter-spacing: 0;
+  max-width: none;
+  width: max-content;
+  /* Compensa el sidebearing izquierdo de Sora en tamaños display */
+  margin-left: -0.06em;
 }
 
 .hero-date {
-  margin-top: 0.7rem;
-  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
-  color: var(--muted);
+  margin: 0.55rem 0 0;
+  font-size: clamp(0.68rem, 1.2vw, 0.84rem);
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  white-space: nowrap;
 }
 
 .hero-side {
@@ -200,17 +222,11 @@
   }
 
   .hero-copy-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: max-content;
     max-width: 100%;
-    text-align: left;
   }
 
-  .hero h1 {
-    max-width: none;
-    letter-spacing: 0;
+  .hero-date {
+    white-space: normal;
   }
 
   .hero-side {
