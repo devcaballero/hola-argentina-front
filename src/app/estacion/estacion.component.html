@@ -1,0 +1,12 @@
+<div
+  class="estacion-widget"
+  role="group"
+  [attr.aria-label]="
+    next
+      ? 'Próxima estación: ' + seasonLabel + ', ' + daysLabel
+      : 'Próxima estación'
+  "
+>
+  <span class="estacion-label">{{ seasonLabel }}</span>
+  <span class="estacion-value">{{ daysLabel }}</span>
+</div>
