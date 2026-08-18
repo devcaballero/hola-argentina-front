@@ -63,16 +63,83 @@
         <p class="day-precip day-precip-spacer" *ngIf="!day.precipLabel">&nbsp;</p>
 
         <p class="day-temps">
-          <span class="temp-max">{{ day.tempMaxLabel }}</span>
-          <span class="temp-sep">/</span>
           <span class="temp-min">{{ day.tempMinLabel }}</span>
+          <span class="temp-sep">/</span>
+          <span class="temp-max">{{ day.tempMaxLabel }}</span>
         </p>
 
-        <div class="day-wind">
-          <svg viewBox="0 0 24 24" class="wind-arrow" [style.transform]="'rotate(' + day.windDirection + 'deg)'" aria-hidden="true">
-            <path d="M12 3l4 7h-3v11h-2V10H8l4-7z"/>
+        <div class="day-wind" *ngIf="day.windLabel">
+          <p class="day-wind-heading">
+            <span class="day-wind-title">Viento</span>
+            <svg viewBox="0 0 24 24" class="day-wind-icon" aria-hidden="true">
+              <path
+                d="M4 8h9.5a2.5 2.5 0 1 0-2.5-2.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+              <path
+                d="M4 12h12.5a2.5 2.5 0 1 0-2.5-2.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+              <path
+                d="M4 16h7.5a2.5 2.5 0 1 1-2.5 2.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </p>
+          <p class="day-wind-value">
+            <span class="day-wind-dir" *ngIf="day.windDirLabel">
+              <span>{{ day.windDirLabel }}</span>
+              <svg viewBox="0 0 24 24" class="wind-arrow" [style.transform]="'rotate(' + day.windDirection + 'deg)'" aria-hidden="true">
+                <path d="M12 3l4 7h-3v11h-2V10H8l4-7z"/>
+              </svg>
+            </span>
+            <span class="day-wind-speed">{{ day.windSpeedLabel }}</span>
+          </p>
+        </div>
+
+        <div class="day-humidity" *ngIf="day.humidityLabel">
+          <p class="day-humidity-heading">
+            <span class="day-humidity-title">Humedad</span>
+            <svg viewBox="0 0 24 24" class="day-humidity-icon" aria-hidden="true">
+              <path d="M12 3.2C12 3.2 6.5 10.2 6.5 14.2a5.5 5.5 0 0 0 11 0C17.5 10.2 12 3.2 12 3.2z"/>
+            </svg>
+          </p>
+          <p class="day-humidity-value">{{ day.humidityLabel }}</p>
+        </div>
+
+        <div class="day-sun" *ngIf="day.sunrise && day.sunset" aria-label="Salida y puesta del sol">
+          <svg viewBox="0 0 24 24" class="day-sun-icon" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.5"/>
+            <g stroke-linecap="round">
+              <line x1="12" y1="2" x2="12" y2="4.5"/>
+              <line x1="12" y1="19.5" x2="12" y2="22"/>
+              <line x1="2" y1="12" x2="4.5" y2="12"/>
+              <line x1="19.5" y1="12" x2="22" y2="12"/>
+              <line x1="4.8" y1="4.8" x2="6.6" y2="6.6"/>
+              <line x1="17.4" y1="17.4" x2="19.2" y2="19.2"/>
+              <line x1="4.8" y1="19.2" x2="6.6" y2="17.4"/>
+              <line x1="17.4" y1="6.6" x2="19.2" y2="4.8"/>
+            </g>
           </svg>
-          <span>{{ day.windLabel }}</span>
+          <span class="day-sun-row">
+            <span class="day-sun-item">
+              <span class="day-sun-label">Salida</span>
+              <span class="day-sun-time">↑ {{ day.sunrise }}</span>
+            </span>
+            <span class="day-sun-item">
+              <span class="day-sun-label">Puesta</span>
+              <span class="day-sun-time">↓ {{ day.sunset }}</span>
+            </span>
+          </span>
         </div>
       </article>
     </div>
