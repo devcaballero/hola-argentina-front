@@ -19,6 +19,7 @@ import { AsadoComponent } from './asado/asado.component';
 import { PanComponent } from './pan/pan.component';
 import { TasabcraComponent } from './tasabcra/tasabcra.component';
 import { DolarTileComponent } from './dolar-tile/dolar-tile.component';
+import { MoonComponent } from './moon/moon.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DolarTileComponent } from './dolar-tile/dolar-tile.component';
     PanComponent,
     TasabcraComponent,
     DolarTileComponent,
+    MoonComponent,
   ],
   imports: [
     BrowserModule,

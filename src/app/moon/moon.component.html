@@ -1,0 +1,78 @@
+<button
+  type="button"
+  class="moon-widget"
+  (click)="openModal()"
+  [attr.aria-label]="'Fase lunar: ' + phase.label + '. Ver detalle'"
+>
+  <span class="moon-label">
+    Luna
+    <span class="moon-visual" aria-hidden="true" [attr.data-phase]="phaseId">
+      <span class="moon-disk">
+        <span class="moon-shade"></span>
+      </span>
+    </span>
+  </span>
+  <span class="moon-value">{{ phase.shortLabel }}</span>
+  <span class="moon-hint">+ info</span>
+</button>
+
+<div
+  #moonBackdrop
+  class="moon-backdrop"
+  *ngIf="modalOpen"
+  (click)="closeModal()"
+  role="presentation"
+>
+  <div
+    class="moon-modal"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="moon-title"
+  >
+    <header class="moon-modal-header">
+      <div>
+        <p class="moon-modal-kicker">Fase lunar</p>
+        <h3 id="moon-title">{{ isFullMoon ? '¡Hoy es luna llena!' : phase.label }}</h3>
+      </div>
+      <button type="button" class="moon-modal-close" (click)="closeModal()" aria-label="Cerrar">
+        Cerrar
+      </button>
+    </header>
+
+    <div class="moon-modal-body">
+      <div class="moon-modal-hero" aria-hidden="true">
+        <span class="moon-visual moon-visual-lg" [attr.data-phase]="phaseId">
+          <span class="moon-disk">
+            <span class="moon-shade"></span>
+          </span>
+        </span>
+      </div>
+
+      <p class="moon-today-banner" *ngIf="isFullMoon">
+        Iluminación al máximo · disfrutá la noche
+      </p>
+
+      <dl class="moon-facts">
+        <div class="moon-fact">
+          <dt>Iluminación</dt>
+          <dd>{{ illuminationLabel }}</dd>
+        </div>
+        <div class="moon-fact moon-fact-accent" *ngIf="!isFullMoon">
+          <dt>Próxima luna llena</dt>
+          <dd>
+            <span class="moon-fact-main">{{ nextFullCountdownLabel }}</span>
+            <span class="moon-fact-sub">{{ nextFullDateLabel }}</span>
+          </dd>
+        </div>
+        <div class="moon-fact" [class.moon-fact-accent]="isFullMoon">
+          <dt>Próxima luna nueva</dt>
+          <dd>
+            <span class="moon-fact-main" *ngIf="isFullMoon">{{ nextNewDateLabel }}</span>
+            <span class="moon-fact-sub" *ngIf="!isFullMoon">{{ nextNewDateLabel }}</span>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
