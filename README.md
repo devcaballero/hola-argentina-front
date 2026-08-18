@@ -17,6 +17,7 @@ Frontend en **Angular 16**. Consume la API de [`price-webscraper`](https://githu
 cd ../price-webscraper
 npm install
 npm start
+# o: ./start-local.sh
 ```
 
 2. En este repo:
@@ -44,8 +45,15 @@ npm run build -- --configuration=production
 ## Qué muestra
 
 ### Hero
-- Marca **Hola Argentina**, saludo según hora, fecha (`Hoy es …`)
-- Widgets: día, hora (AR) y clima (Buenos Aires)
+- Marca **Hola Argentina** y saludo según hora (Buenos días / tardes / noches)
+- Fila de widgets (AR):
+  - **Hora actual**
+  - **Fecha** (día + número)
+  - **Mes / año**
+  - **Próx. feriado** (días restantes + modal con detalle)
+  - **Próx. estación** (equinoccio/solsticio HS, días restantes)
+  - **Clima** Buenos Aires (condición corta, temp, pronóstico extendido 7 días en modal)
+  - **Luna** (fase + modal con detalle)
 - Auto-refresh en el próximo **`:45`** (hora Argentina)
 - Footer con próxima actualización y versión (`v1.1.0 08/26`)
 
@@ -61,23 +69,32 @@ npm run build -- --configuration=production
 ### Día a día
 - Bondi (SUBE), nafta, asado, pan, Big Mac
 
-Los textos **Últimos…** / **Prox. 7 días** son links que abren el detalle (no navegan a otra página).
+Los textos **Últimos…** / **+ info** abren el detalle en modal (no navegan a otra página).
 
 ## Estructura útil
 
 ```
 src/app/
   app.component.*     # shell, hero, refresh
+  feriado/            # próximo feriado AR (+ feriados-ar.ts)
+  estacion/           # próxima estación (+ estaciones-ar.ts)
+  moon/               # fase lunar (+ moon-phase.ts)
+  temperature/        # clima + pronóstico 7 días
   dolar-tile/         # Oficial y Blue (historial)
   bitcoin/ oro/       # cripto / metal
   prensado/           # inflación mensual
   inflacionanual/
   tasabcra/
-  temperature/        # clima + pronóstico 7 días
   environments/
 ```
+
+## Gitflow
+
+- **Features:** salen de `develop` → PR a `develop` → release PR `develop` → `main`
+- **Fixes:** salen de `main` → PR a `main` → backport/PR a `develop`
 
 ## Notas
 
 - El servicio Java (`springboot-service-scraper`) ya no se usa; el backend activo es Node.
 - Si el hot-reload falla por watches (`EMFILE`), reiniciá `ng serve` o subí el límite de file descriptors.
+- Prod front: [panelinformativo.netlify.app](https://panelinformativo.netlify.app)
