@@ -22,12 +22,6 @@
   color: inherit;
   font: inherit;
   cursor: pointer;
-  transition: border-color 160ms ease, background 160ms ease;
-}
-
-.feriado-widget:hover {
-  border-color: rgba(232, 160, 77, 0.4);
-  background: rgba(10, 12, 18, 0.58);
 }
 
 .feriado-label {
