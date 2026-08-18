@@ -1,0 +1,277 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.feriado-widget {
+  display: grid;
+  grid-template-rows: 1rem auto 1.1rem;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 5.35rem;
+  padding: 0.9rem 0.85rem;
+  border-radius: 1.25rem;
+  background: rgba(10, 12, 18, 0.45);
+  border: 1px solid var(--line);
+  box-sizing: border-box;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.feriado-widget:hover {
+  border-color: rgba(232, 160, 77, 0.4);
+  background: rgba(10, 12, 18, 0.58);
+}
+
+.feriado-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.feriado-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text, #fff8f0);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.feriado-hint {
+  margin: 0;
+  align-self: end;
+  font-size: 0.68rem;
+  line-height: 1;
+  color: #e8a04d;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.feriado-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: max(1.25rem, env(safe-area-inset-top)) 1rem max(1.25rem, env(safe-area-inset-bottom));
+  background: rgba(4, 6, 10, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: feriado-fade-in 180ms ease;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.feriado-modal {
+  width: min(420px, 100%);
+  max-height: min(85vh, 640px);
+  flex-shrink: 0;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.15rem 1.2rem 1.3rem;
+  border-radius: 1.5rem;
+  background: #161a24;
+  border: 1px solid rgba(244, 239, 230, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 28px 70px rgba(0, 0, 0, 0.55);
+  animation: feriado-rise-in 220ms ease;
+  box-sizing: border-box;
+}
+
+.feriado-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.feriado-modal-kicker {
+  margin: 0 0 0.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.55);
+}
+
+.feriado-modal-header h3 {
+  margin: 0;
+  font-family: var(--font-display), 'Sora', sans-serif;
+  font-size: 1.35rem;
+  color: #fff8f0;
+  line-height: 1.2;
+}
+
+.feriado-modal-close {
+  border: 1px solid rgba(244, 239, 230, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff8f0;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.feriado-modal-close:hover {
+  border-color: rgba(232, 160, 77, 0.45);
+}
+
+.feriado-modal-body {
+  display: grid;
+  gap: 1.1rem;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.15rem;
+}
+
+.feriado-today-banner {
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.9rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: #f0b429;
+  background: rgba(240, 180, 41, 0.1);
+  border: 1px solid rgba(240, 180, 41, 0.28);
+}
+
+.feriado-facts {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.feriado-fact {
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  border-radius: 1rem;
+  background: #1c2230;
+  border: 1px solid rgba(244, 239, 230, 0.1);
+}
+
+.feriado-fact-accent {
+  border-color: rgba(232, 160, 77, 0.35);
+  background: #243044;
+}
+
+.feriado-fact dt {
+  margin: 0 0 0.3rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.55);
+}
+
+.feriado-fact dd {
+  margin: 0;
+  display: grid;
+  gap: 0.2rem;
+  font-family: var(--font-display), 'Sora', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff8f0;
+  line-height: 1.25;
+}
+
+.feriado-fact-main {
+  color: #f0b429;
+}
+
+.feriado-fact-sub {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(244, 239, 230, 0.72);
+}
+
+.feriado-upcoming h4 {
+  margin: 0 0 0.65rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.55);
+  font-weight: 600;
+}
+
+.feriado-upcoming ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.feriado-upcoming li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.9rem;
+  background: #1c2230;
+  border: 1px solid rgba(244, 239, 230, 0.08);
+}
+
+.feriado-upcoming-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff8f0;
+  line-height: 1.3;
+}
+
+.feriado-upcoming-meta {
+  font-size: 0.78rem;
+  color: rgba(244, 239, 230, 0.6);
+}
+
+@keyframes feriado-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes feriado-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .feriado-widget {
+    min-width: 0;
+    padding: 0.8rem 0.95rem;
+  }
+
+  .feriado-modal {
+    max-height: min(90vh, 640px);
+  }
+}
