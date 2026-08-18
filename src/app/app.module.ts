@@ -21,6 +21,7 @@ import { TasabcraComponent } from './tasabcra/tasabcra.component';
 import { DolarTileComponent } from './dolar-tile/dolar-tile.component';
 import { MoonComponent } from './moon/moon.component';
 import { FeriadoComponent } from './feriado/feriado.component';
+import { EstacionComponent } from './estacion/estacion.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { FeriadoComponent } from './feriado/feriado.component';
     DolarTileComponent,
     MoonComponent,
     FeriadoComponent,
+    EstacionComponent,
   ],
   imports: [
     BrowserModule,
