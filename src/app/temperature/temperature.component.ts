@@ -24,6 +24,9 @@ interface ForecastDay {
   windMin: number;
   windMax: number;
   windDirection: number;
+  sunrise?: string | null;
+  sunset?: string | null;
+  humidity?: number | null;
 }
 
 interface WeatherPayload {
@@ -31,6 +34,9 @@ interface WeatherPayload {
   weatherCode?: number;
   condition?: WeatherCondition;
   label?: string;
+  sunrise?: string | null;
+  sunset?: string | null;
+  humidity?: number | null;
   forecast?: ForecastDay[];
 }
 
@@ -41,6 +47,9 @@ interface ForecastViewDay extends ForecastDay {
   tempMinLabel: string;
   precipLabel: string;
   windLabel: string;
+  windDirLabel: string;
+  windSpeedLabel: string;
+  humidityLabel: string;
 }
 
 @Component({
@@ -136,13 +145,21 @@ export class TemperatureComponent implements OnInit, AfterViewChecked, OnDestroy
     const date = new Date(`${day.date}T12:00:00`);
     return {
       ...day,
+      sunrise: day.sunrise || null,
+      sunset: day.sunset || null,
       condition: day.condition || 'cloudy',
       dayLabel: this.dayLabel(date, index),
       dateLabel: this.dateLabel(date),
       tempMaxLabel: `${Math.round(day.tempMax)}°`,
       tempMinLabel: `${Math.round(day.tempMin)}°`,
       precipLabel: this.precipLabel(day),
-      windLabel: `${day.windMin} - ${day.windMax} km/h`,
+      windDirLabel: this.windCardinal(day.windDirection),
+      windSpeedLabel: `${day.windMin} - ${day.windMax} km/h`,
+      windLabel: this.windLabel(day),
+      humidityLabel:
+        day.humidity != null && Number.isFinite(Number(day.humidity))
+          ? `${Math.round(Number(day.humidity))}%`
+          : '',
     };
   }
 
@@ -150,6 +167,21 @@ export class TemperatureComponent implements OnInit, AfterViewChecked, OnDestroy
     if (!day.showPrecip) return '';
     const mm = Number(day.precipSum || 0).toFixed(1);
     return `${Math.round(day.precipProbability || 0)}% ${mm} mm`;
+  }
+
+  private windLabel(day: ForecastDay): string {
+    const dir = this.windCardinal(day.windDirection);
+    const speed = `${day.windMin} - ${day.windMax} km/h`;
+    return dir ? `${dir} ${speed}` : speed;
+  }
+
+  /** Dirección meteorológica (de dónde viene), abreviaturas en español. */
+  private windCardinal(degrees: number): string {
+    if (!Number.isFinite(degrees)) return '';
+    const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'];
+    const normalized = ((degrees % 360) + 360) % 360;
+    const index = Math.round(normalized / 45) % 8;
+    return dirs[index];
   }
 
   private dayLabel(date: Date, index: number): string {
