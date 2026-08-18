@@ -2,14 +2,16 @@
   class="weather-widget"
   [attr.data-condition]="condition"
   role="group"
-  [attr.aria-label]="'Clima en Buenos Aires'"
+  [attr.aria-label]="'Clima en Buenos Aires: ' + label"
 >
   <div class="weather-icon" aria-hidden="true">
     <ng-container *ngTemplateOutlet="weatherIcon; context: { $implicit: condition }"></ng-container>
   </div>
 
   <div class="weather-copy">
-    <p class="weather-label">{{ label }}</p>
+    <p class="weather-label">
+      <span *ngFor="let line of labelLines">{{ line }}</span>
+    </p>
     <p class="weather-temp" *ngIf="!isLoading && temperature">{{ temperature }}°</p>
     <p class="weather-temp loading-dots" *ngIf="isLoading"></p>
     <p class="weather-place">Buenos Aires</p>

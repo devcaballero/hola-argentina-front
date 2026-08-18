@@ -63,6 +63,7 @@ export class TemperatureComponent implements OnInit, AfterViewChecked, OnDestroy
   temperature: string | undefined;
   condition: WeatherCondition = 'cloudy';
   label = 'Nublado';
+  labelLines: string[] = ['Nublado'];
   isLoading = true;
   forecastOpen = false;
   forecastDays: ForecastViewDay[] = [];
@@ -135,7 +136,8 @@ export class TemperatureComponent implements OnInit, AfterViewChecked, OnDestroy
     }
 
     this.condition = payload?.condition || this.fallbackCondition(value);
-    this.label = payload?.label || this.labelFromCondition(this.condition);
+    this.labelLines = this.labelLinesFromCondition(this.condition);
+    this.label = this.labelLines.join(' ');
     this.forecastDays = (payload?.forecast || []).map((day, index) =>
       this.toForecastView(day, index)
     );
@@ -196,11 +198,12 @@ export class TemperatureComponent implements OnInit, AfterViewChecked, OnDestroy
     return `${date.getDate()} ${months[date.getMonth()]}`;
   }
 
-  private labelFromCondition(condition: WeatherCondition): string {
-    if (condition === 'sunny') return 'Soleado';
-    if (condition === 'partly') return 'Parcialmente nublado';
-    if (condition === 'rainy') return 'Lluvia';
-    return 'Nublado';
+  /** Short lines that fit the narrow hero tile (full text stays in forecast modal). */
+  private labelLinesFromCondition(condition: WeatherCondition): string[] {
+    if (condition === 'sunny') return ['Soleado'];
+    if (condition === 'partly') return ['Parc.', 'nublado'];
+    if (condition === 'rainy') return ['Lluvia'];
+    return ['Nublado'];
   }
 
   private fallbackCondition(temp: number): WeatherCondition {
