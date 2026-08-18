@@ -4,16 +4,17 @@
   (click)="openModal()"
   [attr.aria-label]="'Fase lunar: ' + phase.label + '. Ver detalle'"
 >
-  <span class="moon-label">
-    Luna
-    <span class="moon-visual" aria-hidden="true" [attr.data-phase]="phaseId">
-      <span class="moon-disk">
-        <span class="moon-shade"></span>
-      </span>
+  <div class="moon-visual" aria-hidden="true" [attr.data-phase]="phaseId">
+    <span class="moon-disk">
+      <span class="moon-shade"></span>
     </span>
-  </span>
-  <span class="moon-value">{{ phase.shortLabel }}</span>
-  <span class="moon-hint">+ info</span>
+  </div>
+  <span class="moon-label">Luna</span>
+  <p class="moon-value">
+    <span>{{ phase.shortLines[0] }}</span>
+    <span *ngIf="phase.shortLines[1]">{{ phase.shortLines[1] }}</span>
+  </p>
+  <span class="moon-hint">Detalle</span>
 </button>
 
 <div

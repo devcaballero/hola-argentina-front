@@ -1,0 +1,82 @@
+<button
+  type="button"
+  class="feriado-widget"
+  (click)="openModal()"
+  [attr.aria-label]="
+    next
+      ? 'Próximo feriado: ' + nextName + ', ' + nextCountdownLabel + '. Ver detalle'
+      : 'Próximo feriado. Ver detalle'
+  "
+>
+  <span class="feriado-label">Prox. feriado</span>
+  <span class="feriado-value">{{ shortLabel }}</span>
+  <span class="feriado-hint">+ info</span>
+</button>
+
+<div
+  #feriadoBackdrop
+  class="feriado-backdrop"
+  *ngIf="modalOpen"
+  (click)="closeModal()"
+  role="presentation"
+>
+  <div
+    class="feriado-modal"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="feriado-title"
+  >
+    <header class="feriado-modal-header">
+      <div>
+        <p class="feriado-modal-kicker">Argentina</p>
+        <h3 id="feriado-title">
+          {{ next?.isToday ? '¡Hoy es feriado!' : 'Próximo feriado' }}
+        </h3>
+      </div>
+      <button type="button" class="feriado-modal-close" (click)="closeModal()" aria-label="Cerrar">
+        Cerrar
+      </button>
+    </header>
+
+    <div class="feriado-modal-body" *ngIf="next">
+      <p class="feriado-today-banner" *ngIf="next.isToday">
+        {{ nextName }}
+      </p>
+
+      <dl class="feriado-facts">
+        <div class="feriado-fact feriado-fact-accent" *ngIf="!next.isToday">
+          <dt>Falta</dt>
+          <dd>
+            <span class="feriado-fact-main">{{ nextCountdownLabel }}</span>
+            <span class="feriado-fact-sub">{{ nextDateLabel }}</span>
+          </dd>
+        </div>
+        <div class="feriado-fact" *ngIf="next.isToday">
+          <dt>Fecha</dt>
+          <dd>{{ nextDateLabel }}</dd>
+        </div>
+        <div class="feriado-fact" *ngIf="!next.isToday">
+          <dt>Feriado</dt>
+          <dd>{{ nextName }}</dd>
+        </div>
+        <div class="feriado-fact">
+          <dt>Tipo</dt>
+          <dd>{{ nextTipoLabel }}</dd>
+        </div>
+      </dl>
+
+      <section class="feriado-upcoming" *ngIf="later.length">
+        <h4>Después</h4>
+        <ul>
+          <li *ngFor="let item of later">
+            <span class="feriado-upcoming-name">{{ item.feriado.name }}</span>
+            <span class="feriado-upcoming-meta">
+              {{ countdownOf(item) }} · {{ dateOf(item) }}
+            </span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
