@@ -20,6 +20,7 @@ import { PanComponent } from './pan/pan.component';
 import { TasabcraComponent } from './tasabcra/tasabcra.component';
 import { DolarTileComponent } from './dolar-tile/dolar-tile.component';
 import { MoonComponent } from './moon/moon.component';
+import { FeriadoComponent } from './feriado/feriado.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MoonComponent } from './moon/moon.component';
     TasabcraComponent,
     DolarTileComponent,
     MoonComponent,
+    FeriadoComponent,
   ],
   imports: [
     BrowserModule,

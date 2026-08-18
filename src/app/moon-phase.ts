@@ -16,7 +16,8 @@ export type MoonPhaseId =
 export interface MoonPhaseInfo {
   id: MoonPhaseId;
   label: string;
-  shortLabel: string;
+  /** Valor compacto del tile (1–2 renglones) */
+  shortLines: [string, string?];
   /** 0 = nueva, 0.5 = llena, ~1 = vuelve a nueva */
   cycle: number;
   /** Iluminación 0–1 */
@@ -39,7 +40,7 @@ export function getMoonPhase(date: Date = new Date()): MoonPhaseInfo {
   return {
     id,
     label: phaseLabel(id),
-    shortLabel: phaseShortLabel(id),
+    shortLines: phaseShortLines(id),
     cycle,
     illumination,
   };
@@ -283,26 +284,25 @@ function phaseLabel(id: MoonPhaseId): string {
   }
 }
 
-function phaseShortLabel(id: MoonPhaseId): string {
-  // Exactamente 5 letras para alinear con MAR / AGO en el hero.
+function phaseShortLines(id: MoonPhaseId): [string, string?] {
   switch (id) {
     case 'new':
-      return 'NUEVA';
+      return ['Nueva'];
     case 'waxing-crescent':
-      return 'CRECE';
+      return ['Crec.', 'inic.'];
     case 'first-quarter':
-      return 'CUART';
+      return ['Cuarto', 'crec.'];
     case 'waxing-gibbous':
-      return 'GIBOS';
+      return ['Gibosa', 'crec.'];
     case 'full':
-      return 'LLENA';
+      return ['Llena'];
     case 'waning-gibbous':
-      return 'GIBOM';
+      return ['Gibosa', 'meng.'];
     case 'last-quarter':
-      return 'ULTIM';
+      return ['Cuarto', 'meng.'];
     case 'waning-crescent':
-      return 'MENGU';
+      return ['Meng.', 'final'];
     default:
-      return 'LUNAR';
+      return ['Lunar'];
   }
 }

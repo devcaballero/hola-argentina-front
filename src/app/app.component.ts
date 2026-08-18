@@ -12,10 +12,9 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly refreshAtMinute = 45;
   readonly appVersion = 'v1.1.0 08/26';
 
-  fechaActual: string = '';
+  fechaCorta: string = '';
+  mesAnio: string = '';
   horaActual: string = '';
-  diaCorto: string = '';
-  mesCorto: string = '';
   saludo: string = 'Hola';
   showClock: boolean = false;
   proximaActualizacion: string = '';
@@ -52,19 +51,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   getFechaActual(): void {
     const fecha = new Date();
-    const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    const diasCortos = ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'];
-    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-    const mesesCortos = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+    const diasCortos = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    const mesesCortos = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-    const diaSemana = dias[fecha.getDay()];
+    const diaSemana = diasCortos[fecha.getDay()];
     const dia = fecha.getDate();
-    const mes = meses[fecha.getMonth()];
+    const mes = mesesCortos[fecha.getMonth()];
     const anio = fecha.getFullYear();
 
-    this.diaCorto = diasCortos[fecha.getDay()];
-    this.mesCorto = mesesCortos[fecha.getMonth()];
-    this.fechaActual = `Hoy es ${diaSemana}, ${dia} de ${mes} de ${anio}`;
+    this.fechaCorta = `${diaSemana} ${dia}`;
+    this.mesAnio = `${mes} ${anio}`;
   }
 
   updateSaludo(): void {

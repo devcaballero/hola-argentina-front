@@ -1,16 +1,18 @@
 :host {
   display: block;
   width: 100%;
+  height: 100%;
 }
 
 .weather-widget {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.55rem;
   min-width: 0;
   width: 100%;
-  max-width: none;
-  padding: 0.9rem 1.1rem;
+  height: 100%;
+  min-height: 5.35rem;
+  padding: 0.7rem 0.85rem;
   border-radius: 1.25rem;
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -24,29 +26,12 @@
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
+  flex: 1;
 }
 
-@media (max-width: 760px) {
-  :host {
-    display: block;
-    width: 100%;
-  }
-
-  .weather-widget {
-    max-width: none;
-    justify-content: flex-start;
-  }
-
-  .weather-copy {
-    align-items: flex-start;
-    text-align: left;
-  }
-}
-
-.weather-icon,
-.day-icon {
-  width: 3.2rem;
-  height: 3.2rem;
+.weather-icon {
+  width: 2.35rem;
+  height: 2.35rem;
   flex-shrink: 0;
 }
 
@@ -54,6 +39,7 @@
   width: 2.8rem;
   height: 2.8rem;
   margin: 0.55rem auto 0.2rem;
+  flex-shrink: 0;
 }
 
 .icon-svg {
@@ -96,31 +82,36 @@
 
 .weather-label {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255, 248, 240, 0.62);
+  line-height: 1.1;
 }
 
 .weather-temp {
-  margin: 0.15rem 0 0;
+  margin: 0.1rem 0 0;
   font-family: 'Sora', sans-serif;
-  font-size: 1.7rem;
+  font-size: 1.35rem;
   font-weight: 600;
   line-height: 1;
   color: #fff8f0;
 }
 
 .weather-place {
-  margin: 0.25rem 0 0;
-  font-size: 0.78rem;
+  margin: 0.15rem 0 0;
+  font-size: 0.68rem;
   color: rgba(255, 248, 240, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .weather-forecast-link {
   display: inline-block;
-  margin-top: 0.2rem;
-  font-size: 0.78rem;
+  margin-top: 0.15rem;
+  font-size: 0.68rem;
   color: #e8a04d;
   text-decoration: underline;
   text-underline-offset: 0.15em;
@@ -128,6 +119,22 @@
 
 .weather-forecast-link:hover {
   color: #f0b96a;
+}
+
+@media (max-width: 760px) {
+  .weather-widget {
+    padding: 0.65rem 0.75rem;
+    gap: 0.45rem;
+  }
+
+  .weather-icon {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .weather-temp {
+    font-size: 1.25rem;
+  }
 }
 
 .forecast-backdrop {
