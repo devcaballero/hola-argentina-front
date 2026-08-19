@@ -28,14 +28,15 @@
   color: var(--muted);
 }
 
+/* Semántica por card: en inflación, subir es malo (rojo) y bajar es bueno (verde). */
 .widget-delta.is-up {
-  color: #7dcea0;
-  background: rgba(125, 206, 160, 0.12);
+  color: #f08a80;
+  background: rgba(240, 138, 128, 0.12);
 }
 
 .widget-delta.is-down {
-  color: #f08a80;
-  background: rgba(240, 138, 128, 0.12);
+  color: #7dcea0;
+  background: rgba(125, 206, 160, 0.12);
 }
 
 .widget-hint {
@@ -178,11 +179,11 @@
 }
 
 .fx-day-delta.is-up {
-  color: #7dcea0;
+  color: #f08a80;
 }
 
 .fx-day-delta.is-down {
-  color: #f08a80;
+  color: #7dcea0;
 }
 
 @keyframes fx-fade-in {
