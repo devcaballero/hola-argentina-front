@@ -66,6 +66,10 @@ npm run build -- --configuration=production
 - Inflación interanual (INDEC): valor + período
 - Tasa BCRA (BADLAR/TPM): Δ en pp, historial 6 meses (último valor de cada mes)
 
+Colores de variación (semántica “bueno/malo” para el usuario, no solo sube/baja):
+- Cotizaciones y tasa BCRA: sube = verde, baja = rojo
+- Inflación: sube = rojo, baja = verde
+
 ### Día a día
 - Bondi (SUBE), nafta, asado, pan, Big Mac
 
