@@ -22,7 +22,8 @@
     >{{ variacionLabel }}</span>
   </div>
 
-  <p class="widget-value" *ngIf="!isLoading">U$S {{ precioLabel }}</p>
+  <p class="widget-value" *ngIf="!isLoading && precioLabel">U$S {{ precioLabel }}</p>
+  <p class="widget-value" *ngIf="!isLoading && !precioLabel">—</p>
   <p class="widget-value loading-dots" *ngIf="isLoading"></p>
   <a
     *ngIf="!isLoading && historial.length"
