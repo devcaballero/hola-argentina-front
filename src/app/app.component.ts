@@ -10,7 +10,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   /** Minuto fijo de cada hora (grilla del reloj) en que se recarga. */
   readonly refreshAtMinute = 45;
-  readonly appVersion = 'v1.1.30 08/26';
+  readonly appVersion = 'v1.1.31 08/26';
 
   fechaCorta: string = '';
   mesAnio: string = '';
@@ -64,10 +64,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   updateSaludo(): void {
-    const hour = new Date().getHours();
-    if (hour < 12) {
+    // Misma zona que el reloj (AR). Madrugada (0–5) es noche, no "días".
+    const hour = Number(this.datePipe.transform(new Date(), 'H', this.arTz));
+    if (hour >= 6 && hour < 12) {
       this.saludo = 'Buenos días';
-    } else if (hour < 19) {
+    } else if (hour >= 12 && hour < 19) {
       this.saludo = 'Buenas tardes';
     } else {
       this.saludo = 'Buenas noches';
