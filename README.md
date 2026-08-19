@@ -50,9 +50,9 @@ npm run build -- --configuration=production
   - **Hora actual**
   - **Fecha** (día + número)
   - **Mes / año**
+  - **Clima** Buenos Aires (condición corta, temp, pronóstico extendido 7 días en modal)
   - **Próx. feriado** (días restantes + modal con detalle)
   - **Próx. estación** (equinoccio/solsticio HS, días restantes)
-  - **Clima** Buenos Aires (condición corta, temp, pronóstico extendido 7 días en modal)
   - **Luna** (fase + modal con detalle)
 - Auto-refresh en el próximo **`:45`** (hora Argentina)
 - Footer con próxima actualización y versión (`v1.1.0 08/26`)
