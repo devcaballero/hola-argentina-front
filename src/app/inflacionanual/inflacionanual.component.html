@@ -1,7 +1,14 @@
 <article class="widget widget-wide">
-  <p class="widget-kicker">INDEC</p>
-  <p class="widget-title">Inflación interanual</p>
-  <p class="widget-meta" *ngIf="periodo">{{ periodo }}</p>
+  <div class="widget-head">
+    <div>
+      <p class="widget-kicker">INDEC</p>
+      <p class="widget-title">Inflación interanual</p>
+      <p class="widget-meta" *ngIf="periodo">{{ periodo }}</p>
+    </div>
+  </div>
+
   <p class="widget-value" *ngIf="!isLoading">{{ inflacionanualizada }}%</p>
   <p class="widget-value loading-dots" *ngIf="isLoading"></p>
+  <!-- Reserva la misma altura que el link de las cards vecinas para alinear el valor. -->
+  <span class="widget-hint widget-hint-spacer" aria-hidden="true">&nbsp;</span>
 </article>
