@@ -1,4 +1,7 @@
-/** Formatea números al estilo argentino: 1550,00 */
+/**
+ * Formatea números al estilo argentino.
+ * Enteros (p.ej. 1465,00) → `1465`; con centavos → `1465,50`.
+ */
 export function formatArDecimal(value: string | number | null | undefined, digits = 2): string {
   if (value === null || value === undefined || value === '') {
     return '';
@@ -15,5 +18,11 @@ export function formatArDecimal(value: string | number | null | undefined, digit
     return String(value);
   }
 
-  return n.toFixed(digits).replace('.', ',');
+  const fixed = n.toFixed(digits);
+  const asNumber = Number(fixed);
+  if (Number.isInteger(asNumber)) {
+    return String(asNumber);
+  }
+
+  return fixed.replace('.', ',');
 }
