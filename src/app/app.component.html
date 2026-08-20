@@ -7,6 +7,17 @@
         <p class="brand">Hola Argentina</p>
         <h1>{{ saludo }}</h1>
       </div>
+      <aside class="efemeride" *ngIf="efemeride" aria-label="Efeméride del día">
+        <p class="efemeride-label">Efeméride</p>
+        <p class="efemeride-text">
+          <span class="efemeride-year" *ngIf="efemeride.year">{{ efemeride.year }} · </span>{{ efemeride.text }}
+        </p>
+        <button
+          type="button"
+          class="efemeride-more"
+          (click)="openEfemerideModal()"
+        >Ver más</button>
+      </aside>
     </div>
 
     <div class="hero-widgets">
@@ -28,6 +39,55 @@
       <app-moon></app-moon>
     </div>
   </header>
+
+  <div
+    #efemerideBackdrop
+    class="efemeride-backdrop"
+    *ngIf="efemerideModalOpen && efemeride"
+    (click)="closeEfemerideModal()"
+    role="presentation"
+  >
+    <div
+      class="efemeride-modal"
+      (click)="$event.stopPropagation()"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="efemeride-title"
+    >
+      <header class="efemeride-modal-header">
+        <div>
+          <p class="efemeride-modal-kicker">Efeméride · Argentina</p>
+          <h3 id="efemeride-title">
+            <span *ngIf="efemeride.year">{{ efemeride.year }} · </span>{{ efemeride.text }}
+          </h3>
+        </div>
+        <button
+          type="button"
+          class="efemeride-modal-close"
+          (click)="closeEfemerideModal()"
+          aria-label="Cerrar"
+        >Cerrar</button>
+      </header>
+
+      <div class="efemeride-modal-body">
+        <p class="efemeride-modal-loading" *ngIf="efemerideSummaryLoading">Cargando…</p>
+        <p class="efemeride-modal-extract" *ngIf="!efemerideSummaryLoading">
+          {{ efemerideSummary || efemeride.text }}
+        </p>
+        <p class="efemeride-modal-source">
+          Fuente:
+          <a
+            *ngIf="efemeride.wikiUrl; else wikiPlain"
+            class="efemeride-modal-source-link"
+            [href]="efemeride.wikiUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Wikipedia</a>
+          <ng-template #wikiPlain>Wikipedia</ng-template>
+        </p>
+      </div>
+    </div>
+  </div>
 
   <main class="board">
     <section class="section section-enter" style="--delay: 0.05s">
