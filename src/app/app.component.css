@@ -43,6 +43,13 @@
   color: var(--accent);
 }
 
+.hero-copy {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+
 .hero-copy-inner {
   display: inline-flex;
   flex-direction: column;
@@ -50,6 +57,193 @@
   width: max-content;
   max-width: 100%;
   text-align: left;
+  flex-shrink: 0;
+}
+
+.efemeride {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 28rem;
+  margin: 0 0 0.2rem;
+  text-align: right;
+}
+
+.efemeride-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.efemeride-text {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  line-height: 1.35;
+  color: rgba(244, 239, 230, 0.88);
+}
+
+.efemeride-year {
+  color: rgba(244, 239, 230, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+
+.efemeride-more {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.efemeride-more:hover,
+.efemeride-more:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
+.efemeride-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: max(1.25rem, env(safe-area-inset-top)) 1rem max(1.25rem, env(safe-area-inset-bottom));
+  background: rgba(4, 6, 10, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: efemeride-fade-in 180ms ease;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.efemeride-modal {
+  width: min(440px, 100%);
+  max-height: min(85vh, 640px);
+  flex-shrink: 0;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.15rem 1.2rem 1.3rem;
+  border-radius: 1.5rem;
+  background: #161a24;
+  border: 1px solid rgba(244, 239, 230, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 28px 70px rgba(0, 0, 0, 0.55);
+  animation: efemeride-rise-in 220ms ease;
+  box-sizing: border-box;
+}
+
+.efemeride-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.efemeride-modal-kicker {
+  margin: 0 0 0.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.55);
+}
+
+.efemeride-modal-header h3 {
+  margin: 0;
+  font-family: var(--font-display), 'Sora', sans-serif;
+  font-size: 1.2rem;
+  color: #fff8f0;
+  line-height: 1.25;
+}
+
+.efemeride-modal-close {
+  border: 1px solid rgba(244, 239, 230, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff8f0;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.efemeride-modal-close:hover {
+  border-color: rgba(232, 160, 77, 0.45);
+}
+
+.efemeride-modal-body {
+  display: grid;
+  gap: 1rem;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.15rem;
+}
+
+.efemeride-modal-loading,
+.efemeride-modal-extract {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: rgba(244, 239, 230, 0.9);
+}
+
+.efemeride-modal-loading {
+  color: var(--muted);
+}
+
+.efemeride-modal-source {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.45);
+}
+
+.efemeride-modal-source-link {
+  color: rgba(244, 239, 230, 0.55);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  transition: color 160ms ease;
+}
+
+.efemeride-modal-source-link:hover,
+.efemeride-modal-source-link:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
+@keyframes efemeride-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes efemeride-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hero-copy-inner > * {
@@ -242,13 +436,21 @@
   }
 
   .hero-copy {
-    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap: 0.85rem;
   }
 
   .hero-copy-inner {
     max-width: 100%;
     text-align: center;
+  }
+
+  .efemeride {
+    max-width: 22rem;
+    text-align: center;
+    margin: 0;
   }
 
   .hero h1 {

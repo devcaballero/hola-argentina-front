@@ -1,21 +1,36 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Efemeride, getEfemerideByMonthDay } from './efemerides-ar';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
+  @ViewChild('efemerideBackdrop') efemerideBackdrop?: ElementRef<HTMLElement>;
 
   /** Minuto fijo de cada hora (grilla del reloj) en que se recarga. */
   readonly refreshAtMinute = 45;
-  readonly appVersion = 'v1.1.32 08/26';
+  readonly appVersion = 'v1.1.33 08/26';
 
   fechaCorta: string = '';
   mesAnio: string = '';
   horaActual: string = '';
   saludo: string = 'Hola';
+  efemeride: Efemeride | null = null;
+  efemerideModalOpen = false;
+  efemerideSummary: string | null = null;
+  efemerideSummaryLoading = false;
   showClock: boolean = false;
   proximaActualizacion: string = '';
 
@@ -28,11 +43,15 @@ export class AppComponent implements OnInit, OnDestroy {
   /** Argentina sin DST: UTC−3. */
   private readonly arOffsetHours = -3;
 
-  constructor(private datePipe: DatePipe) {}
+  constructor(
+    private datePipe: DatePipe,
+    private http: HttpClient,
+  ) {}
 
   ngOnInit() {
     this.getFechaActual();
     this.updateSaludo();
+    this.updateEfemeride();
     this.showClock = true;
     this.updateClock();
     this.setupAutoReload();
@@ -40,13 +59,23 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dateTimer = setInterval(() => {
       this.getFechaActual();
       this.updateSaludo();
+      this.updateEfemeride();
     }, 1800000);
+  }
+
+  ngAfterViewChecked(): void {
+    const el = this.efemerideBackdrop?.nativeElement;
+    if (this.efemerideModalOpen && el && el.parentElement !== document.body) {
+      document.body.appendChild(el);
+    }
   }
 
   ngOnDestroy(): void {
     if (this.reloadTimer) clearTimeout(this.reloadTimer);
     if (this.clockTimer) clearInterval(this.clockTimer);
     if (this.dateTimer) clearInterval(this.dateTimer);
+    this.unlockBodyScroll();
+    this.efemerideBackdrop?.nativeElement?.remove();
   }
 
   getFechaActual(): void {
@@ -75,6 +104,28 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateEfemeride(): void {
+    const md = this.datePipe.transform(new Date(), 'MM-dd', this.arTz) || '';
+    this.efemeride = getEfemerideByMonthDay(md);
+  }
+
+  openEfemerideModal(): void {
+    if (!this.efemeride) return;
+    this.efemerideModalOpen = true;
+    document.body.style.overflow = 'hidden';
+    this.loadEfemerideSummary();
+  }
+
+  closeEfemerideModal(): void {
+    this.efemerideModalOpen = false;
+    this.unlockBodyScroll();
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.efemerideModalOpen) this.closeEfemerideModal();
+  }
+
   updateClock(): void {
     const tick = () => {
       const fecha = new Date();
@@ -83,6 +134,48 @@ export class AppComponent implements OnInit, OnDestroy {
     };
     tick();
     this.clockTimer = setInterval(tick, 1000);
+  }
+
+  private loadEfemerideSummary(): void {
+    const e = this.efemeride;
+    if (!e) return;
+
+    this.efemerideSummary = null;
+    const title = this.wikiTitleFromUrl(e.wikiUrl);
+    if (!title) {
+      this.efemerideSummary = e.text;
+      this.efemerideSummaryLoading = false;
+      return;
+    }
+
+    this.efemerideSummaryLoading = true;
+    const api =
+      'https://es.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(title);
+    this.http.get<{ extract?: string }>(api).subscribe({
+      next: (res) => {
+        this.efemerideSummary = (res.extract || '').trim() || e.text;
+        this.efemerideSummaryLoading = false;
+      },
+      error: () => {
+        this.efemerideSummary = e.text;
+        this.efemerideSummaryLoading = false;
+      },
+    });
+  }
+
+  private wikiTitleFromUrl(url?: string): string | null {
+    if (!url) return null;
+    try {
+      const path = new URL(url).pathname;
+      const raw = path.replace(/^\/wiki\//, '');
+      return raw ? decodeURIComponent(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private unlockBodyScroll(): void {
+    document.body.style.overflow = '';
   }
 
   private setupAutoReload(): void {
