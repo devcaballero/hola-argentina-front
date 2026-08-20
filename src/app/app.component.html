@@ -7,18 +7,21 @@
         <p class="brand">Hola Argentina</p>
         <h1>{{ saludo }}</h1>
       </div>
-      <aside class="efemeride" *ngIf="efemeride" aria-label="Efeméride del día">
-        <p class="efemeride-label">Efeméride</p>
-        <p class="efemeride-text">
-          <span class="efemeride-year" *ngIf="efemeride.year">{{ efemeride.year }} · </span>{{ efemeride.text }}
-        </p>
-        <button
-          type="button"
-          class="efemeride-more"
-          (click)="openEfemerideModal()"
-        >Ver más</button>
-      </aside>
     </div>
+
+    <aside class="efemeride" *ngIf="efemeride" aria-label="Efeméride del día">
+      <p class="efemeride-label">Efeméride</p>
+      <p class="efemeride-text">
+        <span class="efemeride-year" *ngIf="efemeride.year">{{ efemeride.year }}</span>
+        <span class="efemeride-sep" *ngIf="efemeride.year" aria-hidden="true">·</span>
+        <span class="efemeride-fact">{{ efemeride.text }}</span>
+      </p>
+      <button
+        type="button"
+        class="efemeride-more"
+        (click)="openEfemerideModal()"
+      >Ver más</button>
+    </aside>
 
     <div class="hero-widgets">
       <div class="clock-widget" *ngIf="showClock">
@@ -58,7 +61,8 @@
         <div>
           <p class="efemeride-modal-kicker">Efeméride · Argentina</p>
           <h3 id="efemeride-title">
-            <span *ngIf="efemeride.year">{{ efemeride.year }} · </span>{{ efemeride.text }}
+            <span class="efemeride-modal-year" *ngIf="efemeride.year">{{ efemeride.year }}</span>
+            <span class="efemeride-modal-sep" *ngIf="efemeride.year" aria-hidden="true"> · </span>{{ efemeride.text }}
           </h3>
         </div>
         <button
