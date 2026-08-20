@@ -46,6 +46,7 @@ npm run build -- --configuration=production
 
 ### Hero
 - Marca **Hola Argentina** y saludo según hora (Buenos días / tardes / noches)
+- **Efeméride** del día (barra bajo el saludo + modal con resumen de Wikipedia)
 - Fila de widgets (AR):
   - **Hora actual**
   - **Fecha** (día + número)
@@ -55,7 +56,7 @@ npm run build -- --configuration=production
   - **Próx. estación** (equinoccio/solsticio HS, días restantes)
   - **Luna** (fase + modal con detalle)
 - Auto-refresh en el próximo **`:45`** (hora Argentina)
-- Footer con próxima actualización y versión (`v1.1.34 08/26`)
+- Footer con próxima actualización y versión (`v1.2.0 08/26`)
 
 ### Cotizaciones
 - Dólar Oficial / Blue: compra/venta, variación e historial 7 días (modal)
@@ -80,6 +81,7 @@ Los textos **Últimos…** / **+ info** abren el detalle en modal (no navegan a 
 ```
 src/app/
   app.component.*     # shell, hero, refresh
+  efemerides-ar.ts    # efemérides AR (MM-DD + Wikipedia)
   feriado/            # próximo feriado AR (+ feriados-ar.ts)
   estacion/           # próxima estación (+ estaciones-ar.ts)
   moon/               # fase lunar (+ moon-phase.ts)
