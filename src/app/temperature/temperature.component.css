@@ -62,6 +62,15 @@
   transform-origin: 32px 32px;
 }
 
+.moon-body {
+  fill: #e8eef8;
+}
+
+.moon-star {
+  fill: #c9d6ea;
+  opacity: 0.9;
+}
+
 .sun-rays-small {
   transform-origin: 24px 24px;
   stroke-width: 2.5;
