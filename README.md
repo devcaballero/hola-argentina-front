@@ -101,6 +101,5 @@ src/app/
 
 ## Notas
 
-- El servicio Java (`springboot-service-scraper`) ya no se usa; el backend activo es Node.
 - Si el hot-reload falla por watches (`EMFILE`), reiniciá `ng serve` o subí el límite de file descriptors.
 - Prod front: [panelinformativo.netlify.app](https://panelinformativo.netlify.app)
