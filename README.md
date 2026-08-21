@@ -1,8 +1,8 @@
-# Hola Argentina (panel-informativo-front)
+# Hola Argentina (hola-argentina-front)
 
 Panel informativo de Argentina: cotizaciones, economía, clima y precios del día a día.
 
-Frontend en **Angular 16**. Consume la API de [`price-webscraper`](https://github.com/devcaballero/price-webscraper).
+Frontend en **Angular 16**. Consume la API de [`hola-argentina-api`](https://github.com/devcaballero/hola-argentina-api).
 
 ## Requisitos
 
@@ -11,10 +11,10 @@ Frontend en **Angular 16**. Consume la API de [`price-webscraper`](https://githu
 
 ## Cómo correr en local
 
-1. Levantá el scraper (puerto **3000**):
+1. Levantá la API (puerto **3000**):
 
 ```bash
-cd ../price-webscraper
+cd ../hola-argentina-api
 npm install
 npm start
 # o: ./start-local.sh
@@ -35,6 +35,8 @@ Abrí [http://localhost:4200](http://localhost:4200).
 |---------|-----|-----|
 | `src/environments/environment.ts` | `ng serve` (dev) | `http://localhost:3000/api/v1` |
 | `src/environments/environment.prod.ts` | build de producción | `https://price-webscraper.onrender.com/api/v1` |
+
+> El hostname de Render sigue siendo el viejo hasta renombrar el servicio. El publish dir de Netlify debe ser `dist/hola-argentina` (antes `dist/panel-informativo`).
 
 Build prod:
 
