@@ -56,7 +56,7 @@ npm run build -- --configuration=production
   - **Próx. estación** (equinoccio/solsticio HS, días restantes)
   - **Luna** (fase + modal con detalle)
 - Auto-refresh en el próximo **`:45`** (hora Argentina)
-- Footer con próxima actualización y versión (`v1.2.0 08/26`)
+- Footer con próxima actualización y versión (`v1.2.1 08/26`)
 
 ### Cotizaciones
 - Dólar Oficial / Blue: compra/venta, variación e historial 7 días (modal)
