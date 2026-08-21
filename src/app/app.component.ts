@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   /** Minuto fijo de cada hora (grilla del reloj) en que se recarga. */
   readonly refreshAtMinute = 45;
-  readonly appVersion = 'v1.2.0 08/26';
+  readonly appVersion = 'v1.2.1 08/26';
 
   fechaCorta: string = '';
   mesAnio: string = '';

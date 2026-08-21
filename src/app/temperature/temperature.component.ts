@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { ApiService } from '../api.service';
 
-type WeatherCondition = 'sunny' | 'partly' | 'cloudy' | 'rainy';
+type WeatherCondition = 'sunny' | 'clearnight' | 'partly' | 'cloudy' | 'rainy';
 
 interface ForecastDay {
   date: string;
@@ -34,6 +34,7 @@ interface WeatherPayload {
   weatherCode?: number;
   condition?: WeatherCondition;
   label?: string;
+  isDay?: boolean | null;
   sunrise?: string | null;
   sunset?: string | null;
   humidity?: number | null;
@@ -135,12 +136,65 @@ export class TemperatureComponent implements OnInit, AfterViewChecked, OnDestroy
       this.temperature = value.toFixed(1);
     }
 
-    this.condition = payload?.condition || this.fallbackCondition(value);
+    const rawCondition = payload?.condition || this.fallbackCondition(value);
+    this.condition = this.resolveHeroCondition(
+      rawCondition,
+      payload?.isDay,
+      payload?.sunrise,
+      payload?.sunset
+    );
     this.labelLines = this.labelLinesFromCondition(this.condition);
     this.label = this.labelLines.join(' ');
     this.forecastDays = (payload?.forecast || []).map((day, index) =>
       this.toForecastView(day, index)
     );
+  }
+
+  /** Clear sky after sunset should read as night, not "Soleado". */
+  private resolveHeroCondition(
+    condition: WeatherCondition,
+    isDay: boolean | null | undefined,
+    sunrise?: string | null,
+    sunset?: string | null
+  ): WeatherCondition {
+    if (condition === 'clearnight') return 'clearnight';
+    if (condition !== 'sunny') return condition;
+
+    let day = typeof isDay === 'boolean' ? isDay : null;
+    if (day === null) {
+      day = this.isDaytimeBuenosAires(sunrise, sunset);
+    }
+    return day === false ? 'clearnight' : 'sunny';
+  }
+
+  private isDaytimeBuenosAires(
+    sunrise?: string | null,
+    sunset?: string | null
+  ): boolean | null {
+    const now = this.baClockMinutes();
+    const rise = this.clockToMinutes(sunrise);
+    const set = this.clockToMinutes(sunset);
+    if (now == null || rise == null || set == null) return null;
+    return now >= rise && now < set;
+  }
+
+  private baClockMinutes(date = new Date()): number | null {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'America/Argentina/Buenos_Aires',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(date);
+    const hour = Number(parts.find((p) => p.type === 'hour')?.value);
+    const minute = Number(parts.find((p) => p.type === 'minute')?.value);
+    if (!Number.isFinite(hour) || !Number.isFinite(minute)) return null;
+    return hour * 60 + minute;
+  }
+
+  private clockToMinutes(hhmm?: string | null): number | null {
+    const m = String(hhmm || '').match(/^(\d{1,2}):(\d{2})$/);
+    if (!m) return null;
+    return Number(m[1]) * 60 + Number(m[2]);
   }
 
   private toForecastView(day: ForecastDay, index: number): ForecastViewDay {
@@ -201,6 +255,7 @@ export class TemperatureComponent implements OnInit, AfterViewChecked, OnDestroy
   /** Short lines that fit the narrow hero tile (full text stays in forecast modal). */
   private labelLinesFromCondition(condition: WeatherCondition): string[] {
     if (condition === 'sunny') return ['Soleado'];
+    if (condition === 'clearnight') return ['Despejado'];
     if (condition === 'partly') return ['Parc.', 'nublado'];
     if (condition === 'rainy') return ['Lluvia'];
     return ['Nublado'];
