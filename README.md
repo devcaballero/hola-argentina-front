@@ -36,7 +36,7 @@ Abrí [http://localhost:4200](http://localhost:4200).
 | `src/environments/environment.ts` | `ng serve` (dev) | `http://localhost:3000/api/v1` |
 | `src/environments/environment.prod.ts` | build de producción | `https://price-webscraper.onrender.com/api/v1` |
 
-> El hostname de Render sigue siendo el viejo hasta renombrar el servicio. El publish dir de Netlify debe ser `dist/hola-argentina` (antes `dist/panel-informativo`).
+> El hostname de Render sigue siendo el viejo hasta renombrar el servicio. Netlify publica `dist/hola-argentina` (`netlify.toml`); el build también deja `dist/panel-informativo` por si el setting de la UI todavía apunta al path viejo.
 
 Build prod:
 
@@ -58,7 +58,7 @@ npm run build -- --configuration=production
   - **Próx. estación** (equinoccio/solsticio HS, días restantes)
   - **Luna** (fase + modal con detalle)
 - Auto-refresh en el próximo **`:45`** (hora Argentina)
-- Footer con próxima actualización y versión (`v1.2.1 08/26`)
+- Footer con próxima actualización y versión (`v1.2.2 08/26`)
 
 ### Cotizaciones
 - Dólar Oficial / Blue: compra/venta, variación e historial 7 días (modal)
