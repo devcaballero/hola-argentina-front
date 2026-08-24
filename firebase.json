@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/panel-informativo",
+    "public": "dist/hola-argentina",
     "ignore": [
       "firebase.json",
       "**/.*",

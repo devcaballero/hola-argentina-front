@@ -1,10 +1,10 @@
 {
-  "name": "panel-informativo",
+  "name": "hola-argentina-front",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && node -e \"require('fs').cpSync('dist/hola-argentina','dist/panel-informativo',{recursive:true})\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
