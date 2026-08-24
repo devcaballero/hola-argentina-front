@@ -36,7 +36,7 @@ Abrí [http://localhost:4200](http://localhost:4200).
 | `src/environments/environment.ts` | `ng serve` (dev) | `http://localhost:3000/api/v1` |
 | `src/environments/environment.prod.ts` | build de producción | `https://price-webscraper.onrender.com/api/v1` |
 
-> El hostname de Render sigue siendo el viejo hasta renombrar el servicio. El publish dir de Netlify debe ser `dist/hola-argentina` (antes `dist/panel-informativo`).
+> El hostname de Render sigue siendo el viejo hasta renombrar el servicio. Netlify publica `dist/hola-argentina` (`netlify.toml`); el build también deja `dist/panel-informativo` por si el setting de la UI todavía apunta al path viejo.
 
 Build prod:
 
