@@ -68,10 +68,11 @@ npm run build -- --configuration=production
 - Inflación mensual (INDEC): período, Δ en pp, historial 6 meses
 - Inflación interanual (INDEC): valor + período
 - Tasa BCRA (BADLAR/TPM): Δ en pp, historial 6 meses (último valor de cada mes)
+- Riesgo país (EMBI+): puntos básicos, Δ vs día hábil anterior, historial 7 días
 
 Colores de variación (semántica “bueno/malo” para el usuario, no solo sube/baja):
 - Cotizaciones y tasa BCRA: sube = verde, baja = rojo
-- Inflación: sube = rojo, baja = verde
+- Inflación y riesgo país: sube = rojo, baja = verde
 
 ### Día a día
 - Bondi (SUBE), nafta, asado, pan, Big Mac
@@ -93,6 +94,7 @@ src/app/
   prensado/           # inflación mensual
   inflacionanual/
   tasabcra/
+  riesgopais/
   environments/
 ```
 
