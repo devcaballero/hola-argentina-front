@@ -69,10 +69,12 @@ npm run build -- --configuration=production
 - Inflación interanual (INDEC): valor + período
 - Tasa BCRA (BADLAR/TPM): Δ en pp, historial 6 meses (último valor de cada mes)
 - Riesgo país (EMBI+): puntos básicos, Δ vs día hábil anterior, historial 7 días
+- UVA (BCRA): valor diario en pesos, Δ%, historial 7 días (préstamos / plazos fijos)
+- CER (BCRA): índice diario, Δ%, historial 7 días (inflación minorista)
 
 Colores de variación (semántica “bueno/malo” para el usuario, no solo sube/baja):
 - Cotizaciones y tasa BCRA: sube = verde, baja = rojo
-- Inflación y riesgo país: sube = rojo, baja = verde
+- Inflación, riesgo país, UVA y CER: sube = rojo, baja = verde
 
 ### Día a día
 - Bondi (SUBE), nafta, asado, pan, Big Mac
@@ -95,6 +97,7 @@ src/app/
   inflacionanual/
   tasabcra/
   riesgopais/
+  indice-bcra/        # UVA y CER (BCRA)
   environments/
 ```
 
