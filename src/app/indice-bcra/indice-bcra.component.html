@@ -1,0 +1,82 @@
+<article
+  class="widget widget-wide"
+  [class.widget-clickable]="historial.length"
+  (click)="openHistory()"
+  (keydown.enter)="openHistory()"
+  (keydown.space)="$event.preventDefault(); openHistory()"
+  [attr.role]="historial.length ? 'button' : null"
+  [attr.tabindex]="historial.length ? 0 : null"
+  [attr.aria-label]="historial.length ? 'Ver historial de ' + title + ' últimos 7 días' : null"
+>
+  <div class="widget-head">
+    <div>
+      <p class="widget-kicker">{{ kicker }}</p>
+      <p class="widget-title">{{ title }}</p>
+      <p class="widget-meta" *ngIf="meta">{{ meta }}</p>
+    </div>
+    <span
+      *ngIf="variacionLabel"
+      class="widget-delta"
+      [class.is-up]="variacionDir === 'up'"
+      [class.is-down]="variacionDir === 'down'"
+      [class.is-flat]="variacionDir === 'flat'"
+    >{{ variacionLabel }}</span>
+  </div>
+
+  <p class="widget-value" *ngIf="!isLoading">{{ valor }}</p>
+  <p class="widget-value loading-dots" *ngIf="isLoading"></p>
+  <a
+    *ngIf="!isLoading && historial.length"
+    class="widget-hint"
+    href="#"
+    (click)="$event.preventDefault(); $event.stopPropagation(); openHistory()"
+  >Últimos 7 días</a>
+</article>
+
+<div
+  #historyBackdrop
+  class="fx-backdrop"
+  *ngIf="historyOpen"
+  (click)="closeHistory()"
+  role="presentation"
+>
+  <div
+    class="fx-modal"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'indice-bcra-title-' + title"
+  >
+    <header class="fx-header">
+      <div>
+        <p class="fx-kicker">{{ kicker }} · {{ title }}</p>
+        <h3 [id]="'indice-bcra-title-' + title">{{ historyTitle }}</h3>
+      </div>
+      <button type="button" class="fx-close" (click)="closeHistory()" aria-label="Cerrar">
+        Cerrar
+      </button>
+    </header>
+
+    <p class="fx-blurb" *ngIf="description">{{ description }}</p>
+
+    <div class="fx-list">
+      <article
+        class="fx-day"
+        *ngFor="let day of historial; let last = last"
+        [class.is-latest]="last"
+      >
+        <div class="fx-day-meta">
+          <p class="fx-day-name">{{ day.dayLabel }}</p>
+          <p class="fx-day-date">{{ day.dateLabel }}</p>
+        </div>
+        <p class="fx-day-price">{{ day.valorLabel }}</p>
+        <span
+          class="fx-day-delta"
+          [class.is-up]="day.direccion === 'up'"
+          [class.is-down]="day.direccion === 'down'"
+          [class.is-flat]="day.direccion === 'flat'"
+        >{{ day.deltaLabel }}</span>
+      </article>
+    </div>
+  </div>
+</div>

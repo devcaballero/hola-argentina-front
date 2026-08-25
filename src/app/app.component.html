@@ -110,13 +110,27 @@
     <section class="section section-enter" style="--delay: 0.12s">
       <div class="section-head">
         <h2>Economía</h2>
-        <p>IPC INDEC · tasas BCRA · EMBI+</p>
+        <p>IPC INDEC · tasas BCRA · EMBI+ · UVA / CER</p>
       </div>
       <div class="widget-grid widget-grid-economy">
         <app-prensado></app-prensado>
         <app-inflacionanual></app-inflacionanual>
         <app-tasabcra></app-tasabcra>
         <app-riesgopais></app-riesgopais>
+        <app-indice-bcra
+          endpoint="/uva"
+          kicker="BCRA"
+          title="UVA"
+          meta="Préstamos / plazos fijos"
+          description="La UVA (Unidad de Valor Adquisitivo) equivale a la milésima parte del costo promedio de construcción de un m² de vivienda. Se actualiza a diario según la inflación a través del CER."
+        ></app-indice-bcra>
+        <app-indice-bcra
+          endpoint="/cer"
+          kicker="BCRA"
+          title="CER"
+          meta="Coef. estabilización"
+          description="El CER (Coeficiente de Estabilización de Referencia) es un índice diario del BCRA que refleja la evolución de la inflación minorista."
+        ></app-indice-bcra>
       </div>
     </section>
 
