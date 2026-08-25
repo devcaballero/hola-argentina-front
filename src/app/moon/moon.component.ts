@@ -85,7 +85,8 @@ export class MoonComponent implements OnInit, AfterViewChecked, OnDestroy {
     const now = new Date();
     this.phase = getMoonPhase(now);
     // Día calendario AR de la luna llena (coincide con almanaques SHN)
-    this.isFullMoon = isFullMoonDay(now) || this.phase.id === 'full';
+    // Solo el día calendario AR del instante de luna llena (no la banda de fase "full").
+    this.isFullMoon = isFullMoonDay(now);
     this.nextFull = getNextFullMoon(now);
     this.nextNew = getNextNewMoon(now);
     this.illuminationLabel = `${Math.round(this.phase.illumination * 100)}%`;
