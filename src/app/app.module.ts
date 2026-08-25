@@ -19,6 +19,7 @@ import { AsadoComponent } from './asado/asado.component';
 import { PanComponent } from './pan/pan.component';
 import { TasabcraComponent } from './tasabcra/tasabcra.component';
 import { RiesgopaisComponent } from './riesgopais/riesgopais.component';
+import { IndiceBcraComponent } from './indice-bcra/indice-bcra.component';
 import { DolarTileComponent } from './dolar-tile/dolar-tile.component';
 import { MoonComponent } from './moon/moon.component';
 import { FeriadoComponent } from './feriado/feriado.component';
@@ -41,6 +42,7 @@ import { EstacionComponent } from './estacion/estacion.component';
     PanComponent,
     TasabcraComponent,
     RiesgopaisComponent,
+    IndiceBcraComponent,
     DolarTileComponent,
     MoonComponent,
     FeriadoComponent,
